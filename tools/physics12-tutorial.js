@@ -40,10 +40,17 @@
     document.body.dataset.mode = mode;
     const visible = matches();
     slide = Math.max(0, Math.min(slide, visible.length - 1));
+    const terms = normalize(search.value.trim()).split(/\s+/).filter(Boolean);
     for (const card of chapters) {
       const match = visible.includes(card);
       card.dataset.match = String(match);
       card.hidden = !match || (mode === 'slides' && card !== visible[slide]);
+      if (match && terms.length) {
+        card.querySelector('.lesson').open = true;
+        for (const detail of card.querySelectorAll('.derivation')) {
+          if (terms.every(term => normalize(detail.textContent).includes(term))) detail.open = true;
+        }
+      }
     }
     for (const link of links) link.hidden = !visible.some(c => c.dataset.number === link.dataset.navChapter);
     for (const heading of document.querySelectorAll('[data-nav-group]')) heading.hidden = !visible.some(c => c.dataset.subject === heading.dataset.navGroup);
@@ -144,11 +151,13 @@
     requestAnimationFrame(() => {scrollScheduled = false; activeLink(currentChapter());});
   }, {passive: true});
   window.addEventListener('beforeprint', () => {
-    beforePrint = chapters.map(c => c.querySelector('.lesson').open);
-    for (const c of chapters) if (c.dataset.match === 'true') c.querySelector('.lesson').open = true;
+    beforePrint = [...document.querySelectorAll('.lesson,.derivation')].map(detail => [detail, detail.open]);
+    for (const c of chapters) if (c.dataset.match === 'true') {
+      for (const detail of c.querySelectorAll('.lesson,.derivation')) detail.open = true;
+    }
   });
   window.addEventListener('afterprint', () => {
-    if (beforePrint) chapters.forEach((c, i) => {c.querySelector('.lesson').open = beforePrint[i];});
+    if (beforePrint) beforePrint.forEach(([detail, open]) => {detail.open = open;});
     beforePrint = null;
   });
   $('print').addEventListener('click', () => window.print());

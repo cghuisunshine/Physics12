@@ -4,12 +4,15 @@ Page ranges are the printed chapter ranges in Physics12.pdf. Examples and
 questions below are newly written teaching examples, not textbook exercises.
 """
 
+from physics12_derivations import DERIVATIONS
+
 CHAPTERS = []
 
 
 def chapter(title, start, end, group, goal, concepts, formulas, example, steps, answer, pitfall, quiz):
     CHAPTERS.append(dict(number=len(CHAPTERS)+1, title=title, start=start, end=end,
                          group=group, goal=goal, concepts=concepts, formulas=formulas,
+                         derivations=DERIVATIONS[len(CHAPTERS)+1],
                          example=example, steps=steps, answer=answer, pitfall=pitfall,
                          quiz=dict(question=quiz[0], options=quiz[1], correct=quiz[2], explanation=quiz[3])))
 

@@ -29,6 +29,11 @@ try {
   assert.equal(d.querySelectorAll('.quiz').length,33);
   assert.equal(d.querySelectorAll('.lab').length,4);
   assert.equal(d.querySelectorAll('.diagram').length,4);
+  assert.equal(d.querySelectorAll('.derivations').length,33);
+  assert.equal(d.querySelectorAll('.derivation').length,62);
+  assert.equal(d.querySelectorAll('.derivation[open]').length,33);
+  const reviewChapters=new Set([...d.querySelectorAll('.derivation-sources a')].map(a=>Number(a.hash.split('-').pop())));
+  assert.deepEqual([...reviewChapters].sort((a,b)=>a-b),Array.from({length:44},(_,i)=>i+1));
   assert.equal(d.querySelectorAll('script[src],link[rel=stylesheet],iframe').length,0);
   assert.equal(d.querySelectorAll('img[src^="http"]').length,0);
   const ids=[...d.querySelectorAll('[id]')].map(e=>e.id);
@@ -51,6 +56,20 @@ try {
   $('clear').click();assert.equal(shown().length,1);assert.equal(shown()[0].id,'chapter-1');
   $('next').click();assert.equal(shown()[0].id,'chapter-2');
   choose('study');assert.equal(shown().length,33);
+  // A term appearing only in a collapsed extension must reveal its explanation.
+  const gasExtension=$('derivation-15-1'), entropyExtension=$('derivation-15-2');
+  gasExtension.open=false;entropyExtension.open=false;$('chapter-15').querySelector('.lesson').open=false;
+  input('search','Carnot');assert.deepEqual(shown().map(c=>c.id),['chapter-15']);
+  assert.ok(entropyExtension.open);assert.ok($('chapter-15').querySelector('.lesson').open);
+  assert.ok(!gasExtension.open);
+  // Printing opens even unselected explanations in matching chapters only,
+  // and then restores both lesson and nested explanation states.
+  const otherExtension=$('derivation-17-2');otherExtension.open=false;
+  w.dispatchEvent(new w.Event('beforeprint'));
+  assert.ok(gasExtension.open&&entropyExtension.open);assert.ok(!otherExtension.open);
+  w.dispatchEvent(new w.Event('afterprint'));
+  assert.ok(!gasExtension.open&&entropyExtension.open);assert.ok(!otherExtension.open);
+  input('search','');
   input('search','half-life');assert.ok(shown().some(e=>e.id==='chapter-30'));
   d.querySelector('[data-nav-chapter="3"]').click();assert.equal($('search').value,'');assert.equal(w.location.hash,'#chapter-3');
   $('collapse').click();assert.equal(d.querySelectorAll('.lesson[open]').length,0);
@@ -80,5 +99,5 @@ try {
   input('decay-time',6);assert.match($('decay-result').textContent,/50\.000%/);
   for(const id of ['projectile-path','interference-path','decay-path'])assert.ok(!/NaN|Infinity/.test($(id).getAttribute('d')));
   assert.deepEqual(errors,[]);
-  console.log('Passed: all 33 chapters and source links; quizzes and hidden solutions; search/subject filters; three reading modes; navigation/deep links; local progress and unavailable storage; print state; four models with numerical and limiting-case checks.');
+  console.log('Passed: all 33 chapters; 62 equation explanations mapped to 44 review chapters; derivation search and filtered print restoration; quizzes and hidden solutions; search/subject filters; three reading modes; navigation/deep links; local progress and unavailable storage; print state; four models with numerical and limiting-case checks.');
 } finally {w.close();}

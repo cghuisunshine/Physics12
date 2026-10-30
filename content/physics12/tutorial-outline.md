@@ -18,6 +18,20 @@ Build an order-of-magnitude estimate from plausible assumptions. Dimensional ana
 - `1 km/h = 1/3.6 m/s` — Unit factors equal one; arrange them so unwanted units cancel.
 - `[v] = L/T; [a] = L/T²; [F] = ML/T²` — Square brackets here denote dimensions, not a numerical value.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Unit conversion and dimensions
+**Concept:** A quantity stays the same when we multiply it by a conversion factor equal to one. Dimensions track the kind of quantity independently of its unit.
+**Assumptions:** Use consistent base dimensions: length L, mass M, and time T. Unit conversions below are exact.
+1. Start with 1 km/h and multiply by (1000 m / 1 km)(1 h / 3600 s). The km and h cancel.
+2. The remaining factor is 1000/3600 m/s = 1/3.6 m/s.
+3. Velocity is displacement per time, so [v] = L/T. Acceleration is velocity change per time, so [a] = L/T².
+4. From the physical law F = ma, [F] = M(L/T²). Likewise, density defined by ρ = m/V has dimension M/L³.
+**Result:** `1 km/h = (1/3.6) m/s; [v] = LT⁻¹; [a] = LT⁻²; [F] = MLT⁻²`
+**Check:** Both v₀t and at² have dimension L. Dimensional agreement cannot determine the factor ½ in the displacement equation; that needs the motion model.
+**Scope reference:** [1. Measurement](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-1)
+
 ### Worked example
 A runner covers 125 m in 16.2 s. Find the average speed with appropriate precision.
 
@@ -52,6 +66,29 @@ Near Earth, neglecting drag, vertical acceleration is approximately 9.81 m/s² d
 ### Essential equations
 - `v = v₀ + at` — v and v₀ are final and initial velocity; a is constant acceleration.
 - `Δx = v₀t + ½at²; v² = v₀² + 2aΔx` — Use the same coordinate direction in every term.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Constant acceleration from slopes and graph areas
+**Concept:** Acceleration is the slope of a velocity–time graph; displacement is its signed area. A constant slope produces a straight line.
+**Assumptions:** One-dimensional motion with constant acceleration a over elapsed time t; x₀ and v₀ are initial values.
+1. The definition a = (v − v₀)/t rearranges to v = v₀ + at.
+2. The area under the straight velocity graph is a rectangle v₀t plus a signed triangle ½(v − v₀)t.
+3. Substitute v − v₀ = at into that area to obtain Δx = v₀t + ½at².
+4. Equivalently, Δx = ½(v + v₀)t. Multiply 2aΔx = a(v + v₀)t and use at = v − v₀ to get 2aΔx = v² − v₀².
+**Result:** `v = v₀ + at; Δx = v₀t + ½at²; v² = v₀² + 2aΔx`
+**Check:** At a = 0, displacement reduces to v₀t. These graph areas remain signed when velocity is negative; total distance instead uses the area under |v|.
+
+#### The calculus connection for changing acceleration
+**Concept:** A derivative is an instantaneous rate, and an integral adds small changes. The graph interpretation extends to curved graphs.
+**Assumptions:** Motion is sufficiently smooth; a(t) may vary. Definite integrals run from the initial time 0 to the current time t.
+1. Define v = dx/dt and a = dv/dt. Thus dv = a(t) dt.
+2. Adding velocity changes gives v(t) = v₀ + ∫₀ᵗ a(s) ds, where s is a dummy time variable.
+3. Adding displacements gives x(t) = x₀ + ∫₀ᵗ v(s) ds. For constant a, integrating v₀ + as produces v₀t + ½at².
+**Result:** `v(t) = v₀ + ∫₀ᵗ a(s) ds; x(t) = x₀ + ∫₀ᵗ v(s) ds`
+**Check:** The units of each integral are the vertical-axis units times seconds: acceleration area gives m/s, and velocity area gives m.
+**Scope reference:** [2. Motion Along a Straight Line](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-2)
 
 ### Worked example
 A car moves at +12.0 m/s and brakes with a = −3.00 m/s². How long and how far until it stops?
@@ -88,6 +125,21 @@ The familiar range expression assumes launch and landing at the same height on a
 - `x − x₀ = v₀ cos(θ)t; y − y₀ = v₀ sin(θ)t − ½gt²` — Ideal projectile equations; x horizontal and y upward.
 - `R = v₀² sin(2θ)/g; T = 2v₀ sin(θ)/g` — Equal launch and landing height only, for an upward launch.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Components, relative velocity, and projectile range
+**Concept:** Perpendicular vector components can be handled independently, but describe the same elapsed time.
+**Assumptions:** Projectile: negligible drag, constant downward g, horizontal x and upward y. Range and flight time shortcuts require equal launch and landing height and 0 < θ < 90°.
+1. Right-triangle projections give v₀ₓ = v₀ cos θ and v₀ᵧ = v₀ sin θ. Apply the one-dimensional motion equations with aₓ = 0 and aᵧ = −g.
+2. This gives Δx = v₀ cos(θ)t and Δy = v₀ sin(θ)t − ½gt².
+3. At the landing height, 0 = T[v₀ sin θ − ½gT]. Excluding the launch solution T = 0 gives T = 2v₀ sin θ/g.
+4. Then R = v₀ cos θ · T = 2v₀² sin θ cos θ/g. Use 2 sin θ cos θ = sin(2θ).
+5. For relative motion, positions obey r(A/C) = r(A/B) + r(B/C). Taking their time rates gives the corresponding vector velocity sum.
+**Result:** `R = v₀² sin(2θ)/g; T = 2v₀ sin θ/g; v(A/C) = v(A/B) + v(B/C)`
+**Check:** At 45°, sin(2θ) is largest. A cliff launch changes the vertical landing condition, so the equal-height range formula no longer applies.
+**Scope reference:** [3. Vectors](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-3), [4. Motion in Two and Three Dimensions](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-4)
+
 ### Worked example
 A ball is launched at 20.0 m/s at 30.0° above horizontal and lands at the same height. Find its flight time and range.
 
@@ -123,6 +175,21 @@ Static friction adjusts up to its maximum; kinetic friction is approximately μ�
 - `ΣF⃗ = ma⃗; W = mg` — W here denotes the magnitude of weight, not work.
 - `0 ≤ fₛ ≤ μₛN; fₖ = μₖN` — Use the static maximum only at impending slip.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Newton’s law, weight, normal force, and friction
+**Concept:** Newton’s second law is a starting physical law. Weight and contact forces enter its vector sum; friction coefficients summarize measured surface behaviour.
+**Assumptions:** Inertial frame, constant mass, nonrelativistic speeds. The friction model approximates dry sliding contact.
+1. The momentum form ΣF = dp/dt becomes ΣF = ma when p = mv and mass is constant. This reformulates the law rather than proving it from algebra.
+2. A freely falling object has acceleration g downward. Its gravitational force therefore has magnitude W = mg.
+3. For an object on an incline with no other perpendicular force and no perpendicular acceleration, N − mg cos θ = 0, so N = mg cos θ.
+4. Static friction supplies the force needed to prevent slip, up to μₛN. If a block rests on the incline, fₛ = mg sin θ and mg sin θ ≤ μₛmg cos θ.
+5. At impending slip tan θ = μₛ. Once sliding downhill, the model fₖ = μₖN gives a = g(sin θ − μₖ cos θ).
+**Result:** `ΣF = ma; W = mg; fₛ ≤ μₛN; fₖ = μₖN; tan θ_threshold = μₛ`
+**Check:** On a horizontal surface with no vertical pull, N = mg. In an accelerating lift or with an angled pull, derive N again from the perpendicular force equation.
+**Scope reference:** [5. Force and Motion—I](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-5), [6. Force and Motion—II](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-6)
+
 ### Worked example
 A 5.00 kg crate is pulled horizontally with 20.0 N across a level floor. μₖ = 0.200. Find its acceleration.
 
@@ -157,6 +224,31 @@ Any two masses attract. For spherical bodies outside their surfaces, measure r c
 ### Essential equations
 - `aᵣ = v²/r; v = 2πr/T; ΣFᵣ = mv²/r` — Choose the inward radial direction positive.
 - `F = GmM/r²; g = GM/r²; v_orbit = √(GM/r)` — Circular orbit around a much more massive body; G = 6.674 × 10⁻¹¹ N·m²/kg².
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Why circular acceleration is v²/r
+**Concept:** In uniform circular motion, the speed is constant while the velocity direction rotates through the same angle as the radius.
+**Assumptions:** Constant speed on a circle of radius r. Use the limiting geometry of a very short time interval Δt.
+1. Two nearby velocity vectors both have length v. Their difference has magnitude |Δv| = 2v sin(Δθ/2).
+2. For a small angle in radians, 2 sin(Δθ/2) approaches Δθ. The arc travelled is Δs = rΔθ = vΔt.
+3. Thus |Δv|/Δt approaches vΔθ/Δt = v(v/r) = v²/r. The limiting change points toward the centre.
+4. One full lap covers 2πr in period T, so v = 2πr/T. Newton’s law then requires an inward net force mv²/r.
+**Result:** `aᵣ = v²/r = ω²r; ΣFᵣ = mv²/r; v = 2πr/T`
+**Check:** Doubling speed quadruples the required radial force. The force diagram must identify which actual interactions supply that resultant.
+
+#### Circular orbits, Kepler’s scaling, and gravitational energy
+**Concept:** Gravity supplies the inward force for a circular orbit. Its inverse-square form also determines how potential energy changes with separation.
+**Assumptions:** Newtonian gravity, spherical central body of mass M, satellite mass m ≪ M, radius r measured from the centre; U = 0 at infinity.
+1. Start with the gravitational law F = GMm/r². Setting F = mg gives g(r) = GM/r².
+2. For a circular orbit, GMm/r² = mv²/r. Cancel m and one factor of r to obtain v² = GM/r.
+3. Use T = 2πr/v and square to find T² = 4π²r³/(GM). For elliptical orbits the same period relation uses semimajor axis instead of circular radius.
+4. The outward radial force component is Fᵣ = −GMm/r². Since dU = −Fᵣ dr, integrating from infinity to r gives U(r) = −GMm/r.
+5. Near a surface of radius R, ΔU = GMm(1/R − 1/(R+h)) ≈ (GM/R²)mh = mgh when h ≪ R.
+**Result:** `v_orbit = √(GM/r); T² = 4π²r³/(GM); U = −GMm/r`
+**Check:** A more distant circular orbit has lower speed and a longer period. The familiar mgh is a local approximation to the inverse-square potential.
+**Scope reference:** [4. Motion in Two and Three Dimensions](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-4), [6. Force and Motion—II](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-6), [13. Gravitation](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-13)
 
 ### Worked example
 A 1000 kg car rounds a flat curve of radius 50.0 m at 10.0 m/s. Find the required friction and minimum static coefficient.
@@ -194,6 +286,30 @@ Energy is useful when the question links speeds and positions without asking for
 - `Kᵢ + Uᵢ + W_nc = K_f + U_f; U_g = mgy; U_s = ½kx²` — W_nc is work by nonconservative forces in this mechanical-energy accounting.
 - `P_avg = W/Δt; P = Fv cos θ` — The second expression is instantaneous power for a force on a moving object.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Work–energy theorem and kinetic energy
+**Concept:** Work accumulates the component of force along displacement. Applying Newton’s law to this accumulated work produces the speed-squared energy expression.
+**Assumptions:** A particle of constant mass at nonrelativistic speed; W_net uses all forces acting on it.
+1. For a constant force, project along displacement: W = (F cos θ)d. For a variable force, add small contributions: W = ∫F · dr.
+2. In one dimension, a = dv/dt = v dv/dx. Therefore F dx = ma dx = mv dv.
+3. Integrate between the initial and final speeds: W_net = ∫ mv dv = ½mv_f² − ½mv_i². The vector derivation gives the same result.
+4. Define K = ½mv², so W_net = ΔK. Dividing a small work increment by dt gives P = F · v = Fv cos θ; over a finite interval P_avg = W/Δt.
+**Result:** `K = ½mv²; W_net = ΔK; P = Fv cos θ`
+**Check:** A force perpendicular to velocity changes direction without instantaneous work. Work and kinetic energy both have units N·m = J.
+
+#### Potential energy and mechanical energy accounting
+**Concept:** For a conservative force, define potential energy so that its decrease equals the work done by that force.
+**Assumptions:** Uniform near-Earth gravity and an ideal Hooke-law spring within its elastic range; choose convenient zero levels.
+1. Use ΔU = −W_conservative. With upward y, gravity has Fᵧ = −mg, so ΔU_g = −∫(−mg) dy = mgΔy.
+2. A spring exerts F = −kx. Thus U_s(x) − U_s(0) = −∫₀ˣ(−ks) ds = ½kx².
+3. Split net work into conservative and nonconservative parts: ΔK = −ΔU + W_nc.
+4. Rearrange to Kᵢ + Uᵢ + W_nc = K_f + U_f. If W_nc = 0, total mechanical energy stays constant.
+**Result:** `U_g = mgy; U_s = ½kx²; Δ(K + U) = W_nc`
+**Check:** For sliding friction, W_nc is typically negative and mechanical energy decreases while thermal energy increases. Changing the zero of U cannot change a predicted speed.
+**Scope reference:** [7. Kinetic Energy and Work](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-7), [8. Potential Energy and Conservation of Energy](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-8)
+
 ### Worked example
 A 2.00 kg object slides from rest down a frictionless track through a vertical drop of 5.00 m. Find its final speed.
 
@@ -228,6 +344,20 @@ Elastic collisions conserve both momentum and total kinetic energy. Objects that
 ### Essential equations
 - `p⃗ = mv⃗; J⃗ = F⃗_avg Δt = Δp⃗` — Use the net external force for impulse–momentum of a system.
 - `Σp⃗ᵢ = Σp⃗_f; x_CM = Σ(mᵢxᵢ)/Σmᵢ` — Momentum conservation requires negligible net external impulse.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Impulse, momentum conservation, and centre of mass
+**Concept:** Internal forces transfer momentum within a system; only external impulse changes its total momentum.
+**Assumptions:** Constant particle masses in an inertial frame. Internal Newton-third-law force pairs cancel in the system sum.
+1. Define each momentum by pᵢ = mᵢvᵢ. Newton’s law gives F_net = dp/dt, so integrating gives J = ∫F_net dt = Δp = F_avg Δt.
+2. Sum over particles. Each internal force has an equal and opposite partner, leaving dP/dt = ΣF_external.
+3. If the external impulse during a collision is negligible, P_f − P_i = 0 even when the collision is inelastic.
+4. Define x_CM = Σmᵢxᵢ/M, with M = Σmᵢ. Differentiate to obtain Mv_CM = Σmᵢvᵢ = P, and differentiate again to obtain Ma_CM = ΣF_external.
+**Result:** `J = Δp; P_f = P_i if J_external = 0; x_CM = Σmᵢxᵢ/M`
+**Check:** Two sticking carts share v_f = (m₁v₁ + m₂v₂)/(m₁+m₂). Their kinetic energy usually changes; the conserved quantity is the system momentum.
+**Scope reference:** [9. Center of Mass and Linear Momentum](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-9)
 
 ### Worked example
 A 0.200 kg cart moving at +3.00 m/s sticks to a stationary 0.300 kg cart. Find their shared speed and kinetic energy loss.
@@ -264,6 +394,30 @@ Rolling without slipping obeys v_CM = Rω and combines translation with rotation
 - `ω_avg = Δθ/Δt; v_t = rω; a_t = rα; v_CM = Rω` — Use radians; ω_avg is average angular velocity. The rolling relation requires no slipping.
 - `τ = rF sin θ; Στ = Iα; K_rot = ½Iω²; L = Iω` — Use the specified fixed/principal axis; Στ = Iα assumes constant I about that axis.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Angular motion, torque, and rotational inertia
+**Concept:** A rigid body shares one angular motion, but mass farther from the axis travels faster and contributes more to rotational inertia.
+**Assumptions:** Rigid body rotating about a fixed axis with constant I. Angles use radians. The scalar angular momentum formula refers to that axis component or to a principal axis.
+1. Arc length is s = rθ. Taking time rates gives v_t = rω and a_t = rα. For rolling without slip on stationary ground, the contact point has zero velocity, giving v_CM = Rω.
+2. For each mass element, tangential force is F_t = m rα. Its axial torque is rF_t = mr²α; summing gives Στ = (Σmr²)α = Iα.
+3. Sum particle kinetic energies: K_rot = Σ½m(rω)² = ½Iω².
+4. Sum angular momentum components: L_axis = Σr(mv_t) = Σmr²ω = Iω. With zero external axial torque, this component is conserved.
+5. For constant α, the straight-line equations carry over: ω = ω₀ + αt and Δθ = ω₀t + ½αt².
+**Result:** `I = Σmᵢrᵢ²; Στ = Iα; K_rot = ½Iω²; L_axis = Iω`
+**Check:** Moving the same mass twice as far from the axis multiplies its contribution to I by four. For a general force, the lever arm gives τ = rF sin θ.
+
+#### Rolling downhill: translation plus rotation
+**Concept:** A rolling object divides its gravitational energy between motion of its centre and rotation about its centre.
+**Assumptions:** Rigid body rolling without slipping from rest through height h; fixed incline, no dissipative losses, I = κmR² about its centre.
+1. Conservation gives mgh = ½mv_CM² + ½Iω².
+2. Insert ω = v_CM/R and I = κmR², so mgh = ½m(1 + κ)v_CM².
+3. Cancel mass and solve. For a uniform solid disk κ = ½; for a thin hoop κ = 1.
+**Result:** `v_CM = √[2gh/(1 + κ)]`
+**Check:** A disk reaches the bottom faster than a hoop from the same height because it needs less rotational energy at a given centre speed. Static friction must be sufficient to enforce the no-slip condition.
+**Scope reference:** [10. Rotation](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-10), [11. Rolling, Torque, and Angular Momentum](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-11)
+
 ### Worked example
 A uniform solid disk of mass 2.00 kg and radius 0.200 m has a tangential 3.00 N force applied at its rim. Find α about its frictionless central axle.
 
@@ -299,6 +453,20 @@ Stress is force divided by cross-sectional area; strain is relative deformation.
 - `ΣFₓ = 0; ΣFᵧ = 0; Στ = 0` — Planar static equilibrium.
 - `stress = F/A; strain = ΔL/L₀; Y = (F/A)/(ΔL/L₀)` — Small axial elastic deformations; Y is measured in pascals.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Equilibrium conditions and elastic extension
+**Concept:** An object that remains at rest has neither translational nor angular acceleration. A linear elastic material has stress proportional to strain.
+**Assumptions:** Planar rigid-body equilibrium; a uniform rod or wire under small axial elastic deformation.
+1. Set a_CM = 0 in ΣF = Ma_CM. Set α = 0 in the fixed-axis torque equation. In a plane this gives ΣFₓ = 0, ΣFᵧ = 0, and Στ = 0.
+2. Define stress = F/A and strain = ΔL/L₀. Young’s modulus is their ratio in the linear elastic regime: Y = (F/A)/(ΔL/L₀).
+3. Rearrange to ΔL = FL₀/(AY). This has the spring form F = k_eff ΔL with k_eff = AY/L₀.
+4. Similarly, linear bulk response uses bulk modulus B = −ΔP/(ΔV/V), with the minus sign accounting for compression when pressure rises.
+**Result:** `ΣFₓ = ΣFᵧ = Στ = 0; ΔL = FL₀/(AY); B = −VΔP/ΔV`
+**Check:** Doubling wire length doubles its extension under the same force; doubling cross-sectional area halves it. Force balance alone cannot rule out rotation.
+**Scope reference:** [12. Equilibrium and Elasticity](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-12)
+
 ### Worked example
 A uniform 4.00 m beam weighs 200 N and is supported at both ends. A 300 N load sits 1.00 m from the left end. Find both upward supports.
 
@@ -333,6 +501,30 @@ In steady incompressible flow through a tube, volume flow rate Av is constant. B
 ### Essential equations
 - `P = P₀ + ρgh; F_b = ρ_fluid V_displaced g` — ρ is mass density in kg/m³; pressure is in Pa.
 - `A₁v₁ = A₂v₂; P + ½ρv² + ρgy = constant` — Bernoulli: steady, incompressible, nonviscous flow along a streamline.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Hydrostatic pressure and buoyancy
+**Concept:** A fluid at rest must balance the weight of each small fluid element. Pressure differences then produce the upward buoyant force.
+**Assumptions:** Uniform density ρ, constant g, static fluid, depth h measured downward from pressure P₀.
+1. Take a vertical fluid column with area A and height h. Its weight is ρAhg.
+2. Vertical balance gives P_bottom A − P₀A − ρAhg = 0. Dividing by A gives P = P₀ + ρgh.
+3. For a submerged rectangular volume, the bottom–top pressure difference is ρg(height). Multiplying by its area gives F_b = ρgV_displaced; side forces cancel.
+4. The same displaced-fluid argument works for other shapes. For a floating object, ρ_fluid V_sub g = mg, so V_sub/V_object = ρ_object/ρ_fluid.
+**Result:** `P = P₀ + ρgh; F_b = ρ_fluid V_displaced g`
+**Check:** A fully submerged rigid object in an incompressible liquid displaces the same volume at different depths, so its buoyant force is unchanged.
+
+#### Continuity and Bernoulli from conservation
+**Concept:** Steady flow conserves mass. Pressure work changes the kinetic and gravitational energy of a parcel.
+**Assumptions:** Steady, incompressible, nonviscous flow along a streamline, with no pump or turbine between the chosen points.
+1. In time Δt, volume A₁v₁Δt enters a tube segment and A₂v₂Δt leaves. With no accumulation, A₁v₁ = A₂v₂.
+2. Follow a parcel of volume ΔV. Upstream pressure does P₁ΔV work; downstream pressure removes P₂ΔV.
+3. The net work equals ½ρΔV(v₂² − v₁²) + ρgΔV(y₂ − y₁).
+4. Divide by ΔV and regroup each point’s terms to obtain Bernoulli’s equation.
+**Result:** `A₁v₁ = A₂v₂; P + ½ρv² + ρgy = constant along a streamline`
+**Check:** All three Bernoulli terms have units J/m³ = Pa. A horizontal constriction raises ideal flow speed and lowers static pressure.
+**Scope reference:** [14. Fluids](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-14)
 
 ### Worked example
 A sealed object has volume 2.00 × 10⁻³ m³ and mass 1.50 kg. What fraction of its volume is submerged when floating in water of density 1000 kg/m³?
@@ -370,6 +562,30 @@ A wave moves a disturbance and energy while medium particles oscillate locally. 
 - `v = fλ; f = 1/T; E_spring = ½kA²` — A is oscillation amplitude; T denotes period here.
 - `f_n = nv/(2L), n = 1, 2, …` — Standing waves on a uniform string fixed at both ends.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Spring and pendulum periods from restoring forces
+**Concept:** Simple harmonic motion occurs when acceleration is proportional to displacement and points back toward equilibrium.
+**Assumptions:** Ideal undamped spring with mass m; simple pendulum with length ℓ and small angle θ in radians.
+1. Hooke’s empirical law F = −kx and Newton’s law give d²x/dt² = −(k/m)x.
+2. For x = A cos(ωt + φ), the second derivative is −ω²x. Matching coefficients yields ω² = k/m; since ω = 2π/T, T = 2π√(m/k).
+3. A pendulum’s tangential acceleration is ℓ d²θ/dt². Its tangential force is −mg sin θ ≈ −mgθ, so d²θ/dt² = −(g/ℓ)θ.
+4. The same comparison gives T ≈ 2π√(ℓ/g). At a spring turning point, E = ½kA²; at equilibrium E = ½mv_max², hence v_max = A√(k/m).
+**Result:** `T_spring = 2π√(m/k); T_pendulum ≈ 2π√(ℓ/g); v_max = A√(k/m)`
+**Check:** The ideal period does not depend on spring amplitude. A large-angle pendulum violates sin θ ≈ θ, and its period increases with amplitude.
+
+#### Wave speed and standing-wave frequencies
+**Concept:** A fixed wave phase moves one wavelength in one period. Standing-wave modes must also satisfy the boundaries.
+**Assumptions:** Linear sinusoidal waves; a uniform string of length L fixed at both ends. Tension F_T and linear mass density μ are constant.
+1. Write y(x,t) = A sin(kx − ωt), with k = 2π/λ and ω = 2πf. Holding phase fixed gives k dx/dt − ω = 0, so v = ω/k = fλ.
+2. For a small string element dx, the difference between endpoint transverse tension components is F_T(∂²y/∂x²)dx.
+3. Newton’s law with element mass μdx gives ∂²y/∂t² = (F_T/μ)∂²y/∂x². Substitution of the sinusoid gives v² = F_T/μ.
+4. Fixed ends require nodes at both boundaries, so L = nλ/2 with n = 1, 2, … . Substitute λ_n = 2L/n into f = v/λ.
+**Result:** `v = fλ = √(F_T/μ); f_n = nv/(2L); f = 1/T`
+**Check:** Higher string tension raises all mode frequencies. The medium particles oscillate transversely; their speed is different from the phase speed v.
+**Scope reference:** [15. Oscillations](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-15), [16. Waves—I](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-16)
+
 ### Worked example
 A 0.500 kg mass on a spring with k = 200 N/m oscillates with amplitude 0.100 m. Find its period and maximum speed.
 
@@ -405,6 +621,30 @@ The Doppler effect changes the received frequency when source and listener move 
 - `β = 10 log₁₀(I/I₀); I₀ = 10⁻¹² W/m²` — β is sound level in dB; this I₀ is the reference intensity.
 - `f_beat = |f₁ − f₂|; f_n = nv/(4L), n = 1, 3, 5, …` — Second expression: ideal pipe closed at one end.
 - `f_observed = f_source (v + v_o)/(v − v_s)` — v_o is positive toward the source; v_s is positive toward the observer; speeds are relative to the medium.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Sound level, spreading, and beats
+**Concept:** Intensity is energy flow per area. Decibels compare intensities logarithmically, while beats arise from superposing nearby frequencies.
+**Assumptions:** For inverse-square spreading, an isotropic source in a lossless open medium; for beats, two coherent tones with close frequencies.
+1. A source of acoustic power P sends that power through a sphere of area 4πr², giving I = P/(4πr²).
+2. Sound level is defined as β = 10 log₁₀(I/I₀), with I₀ = 10⁻¹² W/m². Therefore a tenfold intensity increase adds 10 dB; doubling adds about 3 dB.
+3. Use cos(2πf₁t) + cos(2πf₂t) = 2 cos[π(f₁ − f₂)t] cos[π(f₁ + f₂)t].
+4. The magnitude of the slow envelope has successive loud peaks separated by 1/|f₁ − f₂|, so f_beat = |f₁ − f₂|.
+**Result:** `I = P/(4πr²); β = 10 log₁₀(I/I₀); f_beat = |f₁ − f₂|`
+**Check:** Doubling distance quarters intensity and lowers level by about 6 dB under the spreading assumptions. A zero frequency difference gives no beats.
+
+#### Pipe modes and the Doppler equation
+**Concept:** Pipe boundaries fix allowed wavelengths. Relative source and observer motion changes the spacing and arrival rate of sound wavefronts.
+**Assumptions:** Ideal pipe with one closed end; one-dimensional classical sound in a stationary medium. Speeds are relative to the medium; source motion stays subsonic.
+1. A closed end is a displacement node, and an open end is approximately a displacement antinode. Thus L = nλ/4 for n = 1, 3, 5, …, giving f_n = nv/(4L).
+2. A source emits crests every T_s = 1/f_s. Moving toward the observer by v_sT_s shortens their spacing to λ_front = (v − v_s)T_s.
+3. An observer moving toward the source meets those crests at relative speed v + v_o. Divide the encounter speed by λ_front.
+4. This yields f_observed = f_s(v + v_o)/(v − v_s), with v_o positive toward the source and v_s positive toward the observer.
+**Result:** `f_n = nv/(4L), n odd; f_observed = f_s(v + v_o)/(v − v_s)`
+**Check:** For stationary source and observer, the observed frequency equals f_s. End corrections and real pipe geometry shift the ideal mode frequencies.
+**Scope reference:** [17. Waves—II](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-17)
 
 ### Worked example
 A sound has intensity 1.00 × 10⁻⁶ W/m². Find its level and the level when intensity doubles.
@@ -442,6 +682,29 @@ Temperature measures average translational kinetic energy in this model, rather 
 - `PV = nRT = Nk_B T; ⟨K_trans⟩ = 3k_B T/2` — P is absolute pressure; R = 8.314 J/(mol·K).
 - `v_rms = √(3k_B T/m)` — m is the mass of one molecule, not the mass of the entire gas.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Temperature scales and thermal expansion
+**Concept:** Temperature conversion is a scale definition. Expansion coefficients quantify a measured fractional change per degree.
+**Assumptions:** A uniform object over a small temperature interval where the linear expansion coefficient α is approximately constant.
+1. The Kelvin and Celsius scales have equal increments and offset zero points: T(K) = T(°C) + 273.15.
+2. Define α ≈ (ΔL/L₀)/ΔT. Rearranging gives ΔL = αL₀ΔT.
+3. For an isotropic solid, V = L³. A small fractional change gives ΔV/V ≈ 3ΔL/L, so the volume expansion coefficient is approximately 3α.
+**Result:** `T(K) = T(°C) + 273.15; ΔL = αL₀ΔT; ΔV ≈ 3αV₀ΔT`
+**Check:** A temperature difference of 10°C is 10 K. An absolute temperature in an ideal-gas equation must be in kelvins.
+
+#### Gas pressure, molecular energy, and rms speed
+**Concept:** Pressure comes from repeated molecular momentum transfers to container walls. Temperature measures the mean translational kinetic energy of an ideal gas.
+**Assumptions:** Dilute classical ideal gas in thermal equilibrium, isotropic molecular velocities, elastic wall collisions, negligible interaction energy.
+1. In a cubical box of side L, a molecule with x-speed vₓ reverses momentum by 2mvₓ every 2L/|vₓ|. Its average x-force contribution is mvₓ²/L.
+2. Divide the sum of forces by wall area L²: P = Nm⟨vₓ²⟩/V. Isotropy gives ⟨vₓ²⟩ = ⟨v²⟩/3, so PV = Nm⟨v²⟩/3.
+3. Combine this mechanical result with the ideal-gas equation of state PV = Nk_B T. Then ½m⟨v²⟩ = 3k_B T/2.
+4. By definition v_rms = √⟨v²⟩, hence v_rms = √(3k_B T/m). With N = nN_A and R = N_Ak_B, PV = nRT.
+**Result:** `PV = nRT = Nk_B T; ⟨K_trans⟩ = 3k_B T/2; v_rms = √(3k_B T/m)`
+**Check:** At the same temperature, lighter molecules have larger rms speed but the same mean translational kinetic energy. The wall argument alone does not define an absolute temperature scale.
+**Scope reference:** [18. Temperature, Heat, and the First Law of Thermodynamics](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-18), [19. The Kinetic Theory of Gases](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-19)
+
 ### Worked example
 One mole of ideal gas occupies 0.0240 m³ at 293 K. Find its pressure.
 
@@ -476,6 +739,30 @@ Conduction transfers energy through matter without bulk flow. Convection involve
 ### Essential equations
 - `Q = mcΔT; Q_phase = mL; ΣQ = 0 (isolated calorimeter)` — c is specific heat; L is latent heat for the stated phase change.
 - `P_conduction = kAΔT/ℓ; P_rad,net = εσA(T⁴ − T_surr⁴)` — Steady one-dimensional conduction; radiative surroundings at uniform T_surr. Radiation temperatures are in kelvins.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Heating, phase changes, and calorimetry
+**Concept:** Specific heat and latent heat are material properties defined by how much energy a process transfers.
+**Assumptions:** Approximately constant specific heat c or latent heat L over the interval; an isolated calorimeter includes every participating body and container.
+1. Define c = (1/m)dQ/dT for the specified process. Integrating with constant c gives Q = mc(T_f − T_i).
+2. During a specified equilibrium phase change, transferred energy changes the phase fraction at nearly fixed temperature. Define L = Q_phase/m, giving Q_phase = mL.
+3. Energy conservation for an isolated set of bodies requires ΣQ = 0. Assign positive Q to energy gained and negative Q to energy lost.
+4. For two bodies with no phase change, m₁c₁(T_f − T₁) + m₂c₂(T_f − T₂) = 0. Solve for their shared final temperature.
+**Result:** `Q = mcΔT; Q_phase = mL; ΣQ = 0`
+**Check:** Without a phase change or reaction, the final isolated equilibrium temperature lies between the starting temperatures. Include separate warming, phase-change, and cooling terms when needed.
+
+#### Conduction and net thermal radiation
+**Concept:** Heat-flow laws describe measured material response. Geometry and energy balance convert them into useful power formulas.
+**Assumptions:** Steady one-dimensional conduction through a uniform slab; grey-body radiation to large surroundings of uniform temperature, with an appropriate emissivity ε.
+1. Fourier’s empirical conduction law is P = −kA dT/dx, with the sign indicating flow toward lower temperature.
+2. For constant k, no internal heat generation, and steady flow through thickness ℓ, temperature varies linearly, so the magnitude is P = kA(T_hot − T_cold)/ℓ.
+3. Stefan–Boltzmann emission is P_emit = εσAT⁴. Absorption from the specified surroundings contributes εσAT_surr⁴ under the grey-body model.
+4. Subtract absorbed power from emitted power to find net outward radiative transfer.
+**Result:** `P_conduction = kAΔT/ℓ; P_rad,net = εσA(T⁴ − T_surr⁴)`
+**Check:** At T = T_surr, net radiation is zero even though both bodies continue emitting. The fourth powers require absolute temperatures.
+**Scope reference:** [18. Temperature, Heat, and the First Law of Thermodynamics](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-18)
 
 ### Worked example
 How much energy heats 0.200 kg of liquid water from 20.0 °C to 60.0 °C? Use c = 4186 J/(kg·K), with no losses or phase change.
@@ -513,6 +800,32 @@ A cyclic heat engine accepts heat from a hot reservoir, does work, and rejects h
 - `η = W_out/Q_H = 1 − Q_C/Q_H; η_Carnot = 1 − T_C/T_H` — For engine bookkeeping Q_H and Q_C are positive magnitudes. Use Kelvin temperatures.
 - `ΔS = Q_rev/T` — For reversible isothermal transfer; use a reversible comparison path to find entropy changes.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### First law and ideal-gas work
+**Concept:** Internal energy changes through heat entering a system and work leaving it. Gas expansion does mechanical work against external pressure.
+**Assumptions:** Closed system with work positive when done by the system; quasistatic ideal-gas paths when gas pressure is used in the work integral.
+1. A piston displacement dx changes volume by dV = A dx. Pressure force PA does work dW = PA dx = P dV.
+2. Energy conservation therefore gives ΔU = Q − W, with W = ∫P dV. At constant pressure this becomes PΔV.
+3. On a reversible isothermal ideal-gas path, P = nRT/V. Integrate to get W = nRT ln(V_f/V_i). Since ideal-gas internal energy depends only on T, ΔU = 0 and Q = W.
+4. For an ideal gas with constant heat capacities on a reversible adiabatic path, Q = 0 and dU = nC_V dT = −P dV.
+5. Insert P = nRT/V and integrate C_V dT/T = −R dV/V. With γ = C_P/C_V and C_P − C_V = R, obtain TV^(γ−1) = constant, or PV^γ = constant.
+**Result:** `ΔU = Q − W; W = ∫P dV; W_isothermal = nRT ln(V_f/V_i); PV^γ = constant (reversible adiabatic)`
+**Check:** Expansion work is positive. An irreversible free expansion cannot be evaluated by inserting the gas pressure into a quasistatic work integral.
+
+#### Heat-engine efficiency, entropy, and the Carnot limit
+**Concept:** A cyclic engine cannot turn all absorbed heat into work while also obeying the second law. Entropy accounts for the direction of the heat transfers.
+**Assumptions:** Engine operates between reservoirs at fixed T_H > T_C > 0 K; Q_H and Q_C are positive heat magnitudes.
+1. Over one cycle, ΔU = 0, so W_out = Q_H − Q_C. Divide by Q_H to get η = 1 − Q_C/Q_H.
+2. Entropy change is defined along a reversible comparison path by dS = δQ_rev/T. For reversible isothermal transfer, ΔS = Q_rev/T.
+3. A reversible cyclic engine has zero total reservoir entropy change: −Q_H/T_H + Q_C/T_C = 0. Hence Q_C/Q_H = T_C/T_H.
+4. Substitute to get η_Carnot = 1 − T_C/T_H. An irreversible engine produces entropy, so Q_C/T_C ≥ Q_H/T_H and η ≤ η_Carnot.
+5. At constant volume, heating an ideal gas with constant C_V gives ΔS = ∫nC_V dT/T = nC_V ln(T_f/T_i). A gas entropy change can be calculated this way even if the actual path is irreversible.
+**Result:** `η = 1 − Q_C/Q_H ≤ 1 − T_C/T_H; ΔS = ∫δQ_rev/T; ΔS_universe ≥ 0`
+**Check:** As reservoir temperatures approach equality, maximum efficiency approaches zero. A subsystem may lose entropy while the total entropy still increases.
+**Scope reference:** [18. Temperature, Heat, and the First Law of Thermodynamics](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-18), [19. The Kinetic Theory of Gases](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-19), [20. Entropy and the Second Law of Thermodynamics](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-20)
+
 ### Worked example
 A gas absorbs 500 J of heat while doing 200 J of work. Find ΔU. Then find the Carnot efficiency between 600 K and 300 K.
 
@@ -547,6 +860,31 @@ Field lines point away from positive charges and toward negative ones; closer sp
 ### Essential equations
 - `F = k_e |q₁q₂|/r²; E = k_e |Q|/r²; F⃗ = qE⃗` — Point charges or appropriate spherical distributions; k_e = 8.988 × 10⁹ N·m²/C².
 - `Φ_E = EA cos θ; ∮E⃗·dA⃗ = Q_enclosed/ε₀` — First: uniform field on a flat surface, θ to its normal. Second: Gauss’s law.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Coulomb force, field, and superposition
+**Concept:** Electric field describes the force per unit test charge from a source configuration. Coulomb’s inverse-square law is an experimental starting law.
+**Assumptions:** Electrostatic point charges in vacuum; a test charge small enough not to disturb the source distribution.
+1. Coulomb’s law gives force magnitude F = k_e|Qq|/r². Define E = F/q for a positive test charge, including its direction.
+2. Cancel test-charge magnitude to obtain E = k_e|Q|/r²; the direction is outward for Q > 0 and inward for Q < 0.
+3. For any test charge, the vector force is F = qE. A negative q reverses the direction.
+4. The superposition principle adds vector field contributions: E_total = ΣEᵢ. Resolve components before summing magnitudes.
+**Result:** `E_point = k_e|Q|/r²; F = qE; E_total = ΣEᵢ`
+**Check:** At the midpoint of two equal positive charges, the vector fields cancel even though the scalar electric potentials add.
+
+#### Gauss’s law: spherical, line, and sheet symmetry
+**Concept:** Electric flux counts the normal field through a surface. A closed-surface flux is fixed by the enclosed charge; symmetry is what lets us extract E from that flux.
+**Assumptions:** Vacuum electrostatics. Spherical, infinitely long line, and infinite-sheet results require their stated symmetries; θ is between field and area normal.
+1. For a uniform field on a flat area, Φ_E = EA cos θ. Gauss’s law states ∮E · dA = Q_enclosed/ε₀.
+2. For spherical symmetry, E is radial and constant on a sphere: E(4πr²) = Q_enclosed/ε₀. Outside the source, E = Q/(4πε₀r²).
+3. For a line with charge per length λ_q, use a cylinder of radius r and length ℓ. End flux is zero and side flux is E(2πrℓ), giving E = |λ_q|/(2πε₀r).
+4. For a sheet of surface charge density σ_q, a pillbox has flux EA on each cap, so 2EA = |σ_q|A/ε₀ and E = |σ_q|/(2ε₀).
+5. For a conductor in electrostatic equilibrium the interior field vanishes. A pillbox across its surface then gives E_outside = |σ_q|/ε₀.
+**Result:** `∮E · dA = Q_enclosed/ε₀; E_sphere = k_e|Q|/r²; E_sheet = |σ_q|/(2ε₀)`
+**Check:** Zero enclosed charge means zero net flux; it does not by itself imply zero field. An external uniform field can enter one side of a closed surface and leave the other.
+**Scope reference:** [21. Coulomb’s Law](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-21), [22. Electric Fields](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-22), [23. Gauss’ Law](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-23)
 
 ### Worked example
 Find the field 0.300 m to the right of an isolated +2.00 μC point charge, and the force on a −1.00 nC charge placed there.
@@ -584,6 +922,31 @@ A capacitor stores equal and opposite separated charges. Its capacitance is char
 - `ΔV = −EΔx; C = Q/ΔV; C_parallel-plate = εA/d` — First relation is along a uniform field; ideal plates neglect edge effects.
 - `U_C = ½C(ΔV)² = Q²/(2C); 1 eV = 1.602 × 10⁻¹⁹ J` — Q is the magnitude of charge on either plate.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Potential from electric work
+**Concept:** Potential difference is the potential-energy change per charge. It is related to the field by accumulated work, not by a vector sum of potential values.
+**Assumptions:** Electrostatic fields; point-charge potential uses zero at infinity. The uniform-field formula uses displacement along the chosen field axis.
+1. Electric work is W_e = ∫qE · dr. Since ΔU = −W_e, divide by q to obtain ΔV = −∫E · dr and ΔU = qΔV.
+2. Along a uniform field in the +x direction, the integral gives ΔV = −EΔx. Potential falls in the field direction.
+3. For a source Q, the outward radial field is k_eQ/r². Integrate V(r) − V(∞) = −∫∞ʳ k_eQ/s² ds to get V = k_eQ/r.
+4. A charge e through 1 V changes energy by e × 1 J/C, defining 1 eV = 1.602 × 10⁻¹⁹ J.
+**Result:** `ΔU = qΔV; ΔV = −∫E · dr; V_point = k_eQ/r`
+**Check:** A positive charge released in an electric field tends toward lower potential. For a negative charge, lower potential energy instead means higher potential.
+
+#### Capacitance, stored energy, and capacitor combinations
+**Concept:** Capacitance connects stored separated charge to voltage. Charging progressively costs more work because the existing charge raises the voltage.
+**Assumptions:** Ideal parallel plates, separation d much smaller than plate dimensions, linear dielectric of permittivity ε, negligible edge fields.
+1. Oppositely charged sheets produce E = Q/(εA) between the plates. Voltage magnitude is V = Ed = Qd/(εA).
+2. Using the definition C = Q/V gives C = εA/d.
+3. During charging, a small charge dq moves through V(q) = q/C, so dU = (q/C)dq. Integrate from 0 to Q: U = Q²/(2C) = ½CV².
+4. Parallel capacitors share V and add charge: Q_total = ΣCᵢV, so C_parallel = ΣCᵢ.
+5. Series capacitors with initially neutral isolated intermediate conductors carry equal charge magnitudes. Voltages add: V_total = ΣQ/Cᵢ, so 1/C_series = Σ1/Cᵢ.
+**Result:** `C = εA/d; U_C = Q²/(2C) = ½CV²; C_parallel = ΣCᵢ; 1/C_series = Σ1/Cᵢ`
+**Check:** For fixed voltage, inserting a dielectric increases stored charge and energy; for an isolated fixed-charge capacitor it lowers voltage and energy. State which constraint applies.
+**Scope reference:** [24. Electric Potential](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-24), [25. Capacitance](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-25)
+
 ### Worked example
 A 4.00 μF capacitor is connected across 12.0 V. Find charge magnitude on each plate and stored energy.
 
@@ -619,6 +982,30 @@ A resistor transfers electrical energy into internal energy. Electrical energy u
 - `I = ΔQ/Δt; V = IR; R = ρℓ/A` — ρ here is electrical resistivity in Ω·m, rather than mass density.
 - `P = IV = I²R = V²/R; E_used = PΔt` — The last two power forms apply to resistive elements obeying V = IR.
 - `V_rms = V_peak/√2; I_rms = I_peak/√2` — Sinusoidal AC; average resistor power is V_rms I_rms.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Current, resistance, and electrical power
+**Concept:** Current measures charge flow, while resistance connects the field driving that flow to the material response.
+**Assumptions:** Uniform wire of length ℓ and area A, constant resistivity ρ, steady current; the material is ohmic over the operating range.
+1. Current is I = dQ/dt, or average I = ΔQ/Δt. With carrier number density n_c, charge magnitude |q|, and drift-speed magnitude v_d, I = n_c|q|Av_d.
+2. The local material law is E = ρJ, with current density J = I/A. For uniform E, V = Eℓ = ρIℓ/A.
+3. Comparing V = IR gives R = ρℓ/A. This depends on the material law rather than being a universal law for every component.
+4. A small charge dQ transferring through voltage V transfers energy dE = V dQ. Divide by dt: P = VI. Substitute V = IR to obtain P = I²R = V²/R.
+5. When power is constant, total transferred energy is E_used = PΔt.
+**Result:** `I = dQ/dt; R = ρℓ/A; P = IV = I²R = V²/R`
+**Check:** For the same material and length, a thicker wire has less resistance. Electrical resistivity ρ here has units Ω·m, unlike mass density.
+
+#### Why sinusoidal rms values contain √2
+**Concept:** An rms value is the DC current or voltage that would produce the same average heating in a resistor.
+**Assumptions:** Sinusoidal steady state, purely resistive load R, average over a whole number of cycles.
+1. Let i(t) = I_peak sin(ωt). Instantaneous resistor power is i²R = I_peak²R sin²(ωt).
+2. The cycle average of sin² is ½, so P_avg = I_peak²R/2.
+3. Set this equal to I_rms²R. Taking the positive root gives I_rms = I_peak/√2, and the same argument gives V_rms = V_peak/√2.
+**Result:** `I_rms = I_peak/√2; V_rms = V_peak/√2; P_avg = V_rms I_rms (resistor)`
+**Check:** The average sinusoidal current is zero, but its rms value and heating are positive. A reactive AC circuit requires a power factor as well.
+**Scope reference:** [26. Current and Resistance](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-26), [31. Electromagnetic Oscillations and Alternating Current](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-31)
 
 ### Worked example
 A 6.00 Ω resistor has 12.0 V across it for 30.0 s. Find current, power, and transferred energy.
@@ -656,6 +1043,30 @@ Capacitor combinations reverse the resistor rules: capacitances add in parallel 
 - `ΣI_in = ΣI_out; ΣΔV_loop = 0; V_terminal = ε − Ir` — Last relation: battery discharging through internal resistance r.
 - `τ = RC; Q_charge(t) = Cε(1 − e^(−t/RC)); Q_discharge(t) = Q₀e^(−t/RC)` — Ideal single-resistor, single-capacitor circuits.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Kirchhoff rules, resistor networks, and real batteries
+**Concept:** Circuit junctions conserve charge, and a complete electrostatic loop accounts for energy per charge.
+**Assumptions:** Lumped DC circuit with negligible charge accumulation at junctions, ideal wires, and no unaccounted changing magnetic flux through a loop.
+1. Charge balance at a junction gives ΣI_in = ΣI_out. Returning around a loop to the same potential gives ΣΔV_loop = 0.
+2. In series, current is shared and voltages add: V = ΣIRᵢ = IΣRᵢ. Therefore R_series = ΣRᵢ.
+3. In parallel, voltage is shared and currents add: I = ΣV/Rᵢ = VΣ(1/Rᵢ). Therefore 1/R_parallel = Σ1/Rᵢ.
+4. A discharging battery with emf ε and internal resistance r has loop equation ε − Ir − V_terminal = 0, giving V_terminal = ε − Ir.
+**Result:** `ΣI_in = ΣI_out; ΣΔV_loop = 0; R_series = ΣRᵢ; 1/R_parallel = Σ1/Rᵢ; V_terminal = ε − Ir`
+**Check:** Parallel equivalent resistance is smaller than the smallest positive branch resistance. Battery terminal voltage equals its emf when current is zero.
+
+#### RC charging and discharging
+**Concept:** As a capacitor charges, its growing voltage reduces the resistor’s voltage and current. The remaining voltage difference decays by a constant fraction per unit time.
+**Assumptions:** Ideal single resistor R and capacitor C; charging from Q(0) = 0 with constant emf ε, or discharging from initial charge Q₀ with the battery removed.
+1. For charging, Kirchhoff’s loop rule gives ε − IR − Q/C = 0. Since I = dQ/dt, dQ/dt = (Cε − Q)/(RC).
+2. Define the charge deficit u = Cε − Q. Then du/dt = −u/(RC), so du/u = −dt/(RC).
+3. Integration gives u(t) = Cεe^(−t/RC), hence Q(t) = Cε[1 − e^(−t/RC)].
+4. For discharge, the remaining capacitor charge obeys dQ/dt = −Q/(RC); therefore Q(t) = Q₀e^(−t/RC). The discharge-current sign depends on the chosen loop direction.
+**Result:** `τ = RC; Q_charge = Cε(1 − e^(−t/RC)); Q_discharge = Q₀e^(−t/RC)`
+**Check:** At one time constant, charging reaches about 63.2% of its final charge and discharging retains about 36.8%. At t = 0 the charging formula gives zero.
+**Scope reference:** [27. Circuits](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-27)
+
 ### Worked example
 Two resistors, 6.00 Ω and 3.00 Ω, are connected in parallel across an ideal 12.0 V battery. Find equivalent resistance and branch currents.
 
@@ -691,6 +1102,31 @@ A current-carrying wire can feel a magnetic force; a loop can feel a torque. The
 - `F⃗ = q(v⃗ × B⃗); F = |q|vB sin θ; F_wire = IℓB sin θ` — θ is between velocity (or wire current direction) and field.
 - `r = mv/(|q|B); B_wire = μ₀I/(2πr); B_solenoid ≈ μ₀nI` — First: nonrelativistic perpendicular motion. Others: long straight wire and long air-core solenoid.
 - `τ_loop = NIAB sin θ` — θ is between the loop’s area normal and field; n in the solenoid formula is turns per metre.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Magnetic force, wire force, orbit radius, and loop torque
+**Concept:** The magnetic part of the Lorentz-force law is perpendicular to velocity. Summing it over moving charges produces the force on a current-carrying wire.
+**Assumptions:** Uniform B; nonrelativistic perpendicular motion for the circular-orbit formula; straight active wire length ℓ; planar coil with N turns.
+1. Start with the physical law F = q(v × B), whose magnitude is |q|vB sin θ. Since F · v = 0, a magnetic field alone does no work on the charge.
+2. For v perpendicular to B, set |q|vB = mv²/r to obtain r = mv/(|q|B). Charge sign determines the direction of curvature.
+3. In a wire segment, the number of mobile carriers is n_cAℓ. Sum their magnetic forces and use I = n_c|q|Av_d to obtain F_wire = IℓB sin θ.
+4. The opposite forces on a rectangular loop make a couple. Force times perpendicular separation gives τ = IAB sin θ for one turn, or τ = NIAB sin θ.
+5. Define the magnetic moment magnitude μ = NIA, directed by the current right-hand rule. The vector torque is μ × B and orientation energy is U = −μ · B.
+**Result:** `F = q(v × B); r = mv/(|q|B); F_wire = IℓB sin θ; τ_loop = NIAB sin θ`
+**Check:** A charge moving parallel to B feels no magnetic force. In the coil torque formula, θ refers to the area normal, not to the plane of the loop.
+
+#### Fields from currents using Ampère’s law
+**Concept:** A symmetric current distribution lets us evaluate the magnetic circulation law without adding every current-element contribution separately.
+**Assumptions:** Steady currents in vacuum or air; an effectively infinite straight wire, or the central interior of a tightly wound long solenoid.
+1. For steady currents, Ampère’s law states ∮B · dℓ = μ₀I_enclosed.
+2. Around a long straight wire, symmetry makes B tangent and constant on a circular path: B(2πr) = μ₀I.
+3. For a long solenoid, choose a rectangular path with one long side inside and one outside. The outside field is approximately zero and the crosswise sides contribute negligibly.
+4. If n is turns per unit length, a path of internal length ℓ encloses nℓ currents: Bℓ ≈ μ₀(nℓ)I.
+**Result:** `B_wire = μ₀I/(2πr); B_solenoid ≈ μ₀nI`
+**Check:** These are symmetry-specific results. A short coil or a point near the solenoid ends requires a more complete field calculation.
+**Scope reference:** [28. Magnetic Fields](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-28), [29. Magnetic Fields Due to Currents](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-29)
 
 ### Worked example
 A proton enters a uniform 0.200 T magnetic field at 1.00 × 10⁶ m/s perpendicular to the field. Find its orbit radius; use m_p = 1.673 × 10⁻²⁷ kg.
@@ -728,6 +1164,40 @@ A moving conductor can develop a motional emf. Generators rotate coils, motors d
 - `|ε_motion| = Bℓv; V_s/V_p = N_s/N_p; V_p I_p = V_s I_s` — Motional emf assumes perpendicular geometry; transformer relations assume ideal operation.
 - `ε_L = −LΔI/Δt; U_L = ½LI²` — L is self-inductance in henries; the emf formula is an average-rate form for constant L.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Flux, motional emf, and ideal transformers
+**Concept:** Faraday’s law connects induced emf to changing magnetic flux. Lenz’s sign makes the induced response oppose the change, consistent with energy conservation.
+**Assumptions:** Uniform field over each planar turn for Φ_B = BA cos θ; perpendicular rod motion for Bℓv; ideal transformer with common time-varying flux and negligible losses.
+1. Define flux by Φ_B = ∫B · dA; for a uniform field and flat loop, Φ_B = BA cos θ. Faraday’s law states ε = −N dΦ_B/dt.
+2. For a rod of length ℓ sliding at speed v across parallel rails in perpendicular B, swept area changes at dA/dt = ℓv. Thus |ε| = Bℓv.
+3. Equivalently, magnetic force separates rod charges until |q|E = |q|vB, so the open-circuit voltage is Eℓ = Bℓv.
+4. Each ideal transformer turn links the same flux, so voltage magnitudes have ratio V_s/V_p = N_s/N_p. With no losses, input and output power match: V_pI_p = V_sI_s.
+**Result:** `ε = −N dΦ_B/dt; |ε_motion| = Bℓv; V_s/V_p = N_s/N_p`
+**Check:** A steady flux gives zero induced emf. Increasing transformer voltage decreases available current by the inverse ratio under ideal power conservation.
+
+#### Inductance and magnetic energy
+**Concept:** An inductor’s changing current changes its own linked flux, creating an emf that resists the current change.
+**Assumptions:** Linear constant inductance L; negligible winding resistance when calculating stored field energy.
+1. Define flux linkage NΦ_B = LI. Faraday’s law gives ε_L = −d(LI)/dt = −L dI/dt for constant L.
+2. An external source raising the current must provide voltage V_L = L dI/dt. Its delivered power is P = IV_L = LI dI/dt.
+3. Thus dU = LI dI. Integrate from current 0 to I to obtain U_L = ½LI². Over a finite interval, average self-induced emf is −LΔI/Δt.
+**Result:** `ε_L = −L dI/dt; U_L = ½LI²`
+**Check:** A constant current has zero ideal self-induced emf while retaining magnetic energy. If L depends strongly on current, the simple quadratic energy formula needs revision.
+
+#### LC oscillations and series RLC resonance
+**Concept:** A capacitor stores electric energy and an inductor stores magnetic energy. Their exchange follows the same mathematics as a mass on a spring.
+**Assumptions:** Ideal lumped L and C; first take R = 0 and no source, then consider a series resistor and sinusoidal drive.
+1. Let i = dQ/dt with a consistent passive circuit convention. The unforced loop equation is L d²Q/dt² + Q/C = 0.
+2. Compare with the oscillator equation x″ + ω₀²x = 0: ω₀ = 1/√(LC), so Q = Q_max cos(ω₀t + φ). Energy Q²/(2C) + ½Li² is constant.
+3. Adding resistance gives LQ″ + RQ′ + Q/C = ε(t). The term RQ′ dissipates energy and damps free oscillations.
+4. For sinusoidal steady state, differentiating current gives inductor reactance X_L = ωL, while integrating current gives capacitor reactance X_C = 1/(ωC). Their voltages are opposite in phase.
+5. The resistor voltage is in phase with current. The phasor right triangle gives Z = √[R² + (X_L − X_C)²] and I_rms = V_rms/Z. Reactances cancel at ω₀ = 1/√(LC).
+**Result:** `ω₀ = 1/√(LC); Z = √[R² + (ωL − 1/(ωC))²]; P_avg = I_rms²R`
+**Check:** At series resonance Z = R and the driven current is largest for a fixed source voltage. Individual L and C voltages can still be large; they cancel in the loop sum.
+**Scope reference:** [30. Induction and Inductance](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-30), [31. Electromagnetic Oscillations and Alternating Current](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-31)
+
 ### Worked example
 A 100-turn coil of area 0.0100 m² is perpendicular to a field that falls uniformly from 0.500 T to zero in 0.200 s. Find average emf magnitude.
 
@@ -763,6 +1233,31 @@ Intensity is average energy flow per unit area. For a sinusoidal plane wave it i
 - `c = 1/√(μ₀ε₀) = fλ; E₀ = cB₀` — Relations for electromagnetic waves in vacuum.
 - `I_avg = ½cε₀E₀²; p_rad = I/c (absorption); p_rad = 2I/c (reflection)` — Sinusoidal plane wave; normal incidence on an ideal absorber or reflector.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Maxwell’s equations and the speed of light
+**Concept:** Changing magnetic fields accompany circulating electric fields, and changing electric fields accompany circulating magnetic fields. Maxwell’s equations predict travelling waves.
+**Assumptions:** Vacuum, no free charges or conduction currents in the wave region; plane wave travelling along x, with E along y and B along z.
+1. Gauss’s electric law is ∮E · dA = Q/ε₀, and its magnetic counterpart is ∮B · dA = 0. Faraday’s law is ∮E · dℓ = −dΦ_B/dt.
+2. Ampère–Maxwell law adds the changing-electric-flux term: ∮B · dℓ = μ₀I + μ₀ε₀ dΦ_E/dt. This term permits waves even where I = 0.
+3. For the stated plane-wave components, the curl equations reduce to ∂E_y/∂x = −∂B_z/∂t and ∂B_z/∂x = −μ₀ε₀∂E_y/∂t.
+4. Differentiate the first with respect to x and substitute the second to obtain ∂²E_y/∂x² = μ₀ε₀∂²E_y/∂t². Compare with the wave equation coefficient 1/c².
+5. For sinusoidal waves, kE₀ = ωB₀, so E₀/B₀ = ω/k = c. One wavelength passes per period, giving c = fλ.
+**Result:** `c = 1/√(μ₀ε₀); E₀ = cB₀; c = fλ`
+**Check:** E, B, and propagation are mutually perpendicular for this plane wave. The result predicts light speed from electromagnetic constants.
+
+#### Intensity and radiation pressure
+**Concept:** Electromagnetic waves transport both energy and momentum. Intensity is the average energy flux; pressure is momentum flux delivered to a surface.
+**Assumptions:** Sinusoidal vacuum plane wave; normal incidence on an ideal fully absorbing or reflecting surface.
+1. The Poynting-vector magnitude is S = EB/μ₀. Substitute B = E/c to get S = cε₀E².
+2. For E = E₀ sin(kx − ωt), the cycle average of E² is E₀²/2, so I_avg = ½cε₀E₀².
+3. Radiation energy U carries forward momentum U/c. Absorbing energy I A dt delivers momentum I A dt/c, giving force IA/c and pressure I/c.
+4. Perfect reflection reverses the radiation momentum and doubles the momentum transfer, giving pressure 2I/c.
+**Result:** `I_avg = ½cε₀E₀²; p_rad = I/c (absorption); p_rad = 2I/c (reflection)`
+**Check:** Pressure units are (W/m²)/(m/s) = N/m². Doubling electric-field amplitude quadruples intensity and radiation pressure.
+**Scope reference:** [32. Maxwell’s Equations; Magnetism of Matter](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-32), [33. Electromagnetic Waves](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-33)
+
 ### Worked example
 A radio signal has frequency 100 MHz. Find its vacuum wavelength.
 
@@ -797,6 +1292,30 @@ For the single-element problems here, a real object has d_o > 0; a real image ha
 ### Essential equations
 - `n = c/v; n₁ sin θ₁ = n₂ sin θ₂; sin θ_c = n₂/n₁` — Angles from the normal; critical-angle formula requires n₁ > n₂.
 - `1/f = 1/d_o + 1/d_i; m = h_i/h_o = −d_i/d_o` — Thin lens or paraxial spherical mirror with the stated convention; f_mirror = R/2.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Refraction and total internal reflection
+**Concept:** A wave must keep the same phase along an interface. Different wave speeds change its direction and wavelength while frequency stays fixed.
+**Assumptions:** Flat stationary interface between transparent media; n = c/v; angles measured from the surface normal.
+1. Wave crests must match along the boundary, so their tangential wave-number components agree: k₁ sin θ₁ = k₂ sin θ₂.
+2. Since k = 2πf/v = 2πfn/c and f is unchanged at the interface, cancel the shared factor to get n₁ sin θ₁ = n₂ sin θ₂.
+3. The transmitted wavelength is λ_medium = v/f = λ_vacuum/n.
+4. For n₁ > n₂, the limiting transmitted angle is 90°. Setting sin θ₂ = 1 gives sin θ_c = n₂/n₁. Larger incidence angles have no propagating refracted ray in the second medium.
+**Result:** `n₁ sin θ₁ = n₂ sin θ₂; λ_medium = λ_vacuum/n; sin θ_c = n₂/n₁`
+**Check:** Entering a higher-index medium bends a ray toward the normal. Total internal reflection requires travel from higher to lower index.
+
+#### Thin-lens equation and magnification from similar triangles
+**Concept:** Two principal rays locate the image. Similar triangles connect image size to object distance and focal length.
+**Assumptions:** Thin converging lens, small paraxial angles, real object beyond its positive focal length for the geometric derivation; extend using signed distances for virtual images.
+1. Let object height be h_o, real image height h_i < 0, and positive object and image distances d_o and d_i. The central ray gives h_i/h_o = −d_i/d_o.
+2. A ray entering parallel to the axis leaves through the far focal point. Its slope is −h_o/f, so at the image plane h_i = h_o(1 − d_i/f).
+3. Equate the two height ratios: −d_i/d_o = 1 − d_i/f. Divide by d_i and rearrange to 1/f = 1/d_o + 1/d_i.
+4. Thus magnification m = h_i/h_o = −d_i/d_o. For a spherical mirror, a near-axis normal tilts by approximately h/R; reflection doubles the tilt, making f ≈ R/2 and giving the analogous paraxial imaging equation.
+**Result:** `1/f = 1/d_o + 1/d_i; m = −d_i/d_o; f_mirror ≈ R/2`
+**Check:** At d_o = 2f, the real image has d_i = 2f and m = −1. As d_o approaches f from above, the image distance grows without bound in the ideal model.
+**Scope reference:** [33. Electromagnetic Waves](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-33), [34. Images](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-34), [35. Interference](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-35)
 
 ### Worked example
 An object is 30.0 cm in front of a converging thin lens with focal length +10.0 cm. Find the image position and magnification.
@@ -834,6 +1353,39 @@ Thin-film interference includes both travel through the film and phase changes o
 - `a sin θ = mλ, m = ±1, ±2, …` — Single-slit dark minima, with slit width a. Do not use this for double-slit bright fringes.
 - `I = I₀ cos² θ` — Malus’s law: linearly polarized incident light at angle θ to the analyzer axis.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Double-slit fringes from path difference
+**Concept:** Phase differences arise when waves travel different distances. Whole-wavelength differences align crests; half-integer differences reverse them.
+**Assumptions:** Two coherent in-phase narrow slits, separation d, same wavelength λ in the propagation medium; far field, and small angles for screen-position formulas.
+1. Far from the slits, the path difference is Δ = d sin θ. Phase difference is δ = 2πΔ/λ.
+2. Constructive interference occurs when δ = 2πm, hence d sin θ = mλ for integer m. Destructive interference occurs at Δ = (m + ½)λ.
+3. On a screen distance L away, tan θ = y/L. For small angles sin θ ≈ tan θ, giving y_m ≈ mλL/d.
+4. Subtract adjacent bright-fringe positions to obtain Δy ≈ λL/d. A multi-slit grating has the same principal-maximum condition, with sharper maxima.
+**Result:** `d sin θ = mλ; y_m ≈ mλL/d; Δy ≈ λL/d`
+**Check:** Increasing wavelength widens fringes; increasing slit separation narrows them. At larger angles use the exact sine condition and y = L tan θ.
+
+#### Single-slit minima and the diffraction envelope
+**Concept:** Every part of a finite-width slit contributes a wave. At certain angles those contributions cancel across the width.
+**Assumptions:** Uniformly illuminated slit of width a in the far field; scalar wave approximation.
+1. At the first minimum, divide the slit into two equal halves. Pair points separated by a/2. Their path difference is (a/2)sin θ.
+2. When a sin θ = λ, each pair differs by λ/2 and cancels. For higher nonzero integer m, split the slit into 2|m| equal strips and pair adjacent strips to obtain a sin θ = mλ.
+3. Adding all phase contributions across the slit by integration gives amplitude proportional to sin u/u, with u = πa sin θ/λ.
+4. Intensity is proportional to squared amplitude, so I = I_central(sin u/u)². For two finite slits, multiply this envelope by the two-slit interference factor.
+**Result:** `a sin θ = mλ, m = ±1, ±2, …; I/I_central = (sin u/u)²`
+**Check:** At θ = 0 the ratio approaches 1, so m = 0 is the central maximum, not a minimum. Slit width a and slit separation d play different roles.
+
+#### Polarization and Malus’s law
+**Concept:** An ideal analyzer passes the electric-field component along its transmission axis. Intensity depends on the square of that component.
+**Assumptions:** Linearly polarized incident light and ideal linear analyzer; θ is the angle between polarization and transmission axes.
+1. Project the incident field amplitude onto the analyzer axis: E_transmitted = E_incident cos θ.
+2. Since intensity is proportional to E², divide transmitted by incident intensity to get I/I₀ = cos²θ.
+3. For initially unpolarized light, averaging cos²θ over all directions gives ½, so a first ideal polarizer passes half the incident intensity.
+**Result:** `I = I₀ cos²θ; I_after_first_polarizer = ½I_unpolarized`
+**Check:** Parallel axes transmit all of the already polarized input; crossed ideal axes transmit zero. I₀ in Malus’s law is the intensity arriving at the analyzer.
+**Scope reference:** [33. Electromagnetic Waves](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-33), [35. Interference](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-35), [36. Diffraction](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-36)
+
 ### Worked example
 Light of wavelength 600 nm passes through two slits 0.200 mm apart onto a screen 2.00 m away. Find adjacent bright-fringe spacing.
 
@@ -869,6 +1421,31 @@ Aberrations blur an image because different rays or colours focus differently. E
 - `P_lens = 1/f; f-number = f/D` — Lens power in dioptres requires f in metres; D is aperture diameter.
 - `M_telescope = −f_objective/f_eyepiece; M_magnifier ≈ D_near/f` — Relaxed-eye viewing; D_near is the chosen near-point distance, often 25 cm.
 - `θ_min ≈ 1.22λ/D; 2d sin θ = mλ` — First: Rayleigh criterion for a circular aperture in radians. Second: Bragg diffraction from crystal planes.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Lens power, magnifiers, and telescopes
+**Concept:** Optical instruments change the angular size of an object at the eye. Their magnification follows from small-angle geometry.
+**Assumptions:** Thin lenses, paraxial rays, relaxed-eye viewing; near-point distance D_near is a chosen reference.
+1. Lens power is defined by P_lens = 1/f with f in metres, giving dioptres. Aperture ratio is defined by f-number = f/D_aperture.
+2. An unaided object of height h at the near point subtends θ₀ ≈ h/D_near. A magnifier with the object at its focal plane sends parallel rays with angle θ ≈ h/f.
+3. Their angular ratio gives M_magnifier ≈ D_near/f.
+4. For a distant object at angular position θ, a telescope objective forms an intermediate image of height h ≈ f_objective θ. An eyepiece sends this image out at angle θ′ ≈ −h/f_eyepiece.
+5. Thus M_telescope = θ′/θ = −f_objective/f_eyepiece; the minus sign indicates inversion.
+**Result:** `P_lens = 1/f; f-number = f/D; M_magnifier ≈ D_near/f; M_telescope = −f_o/f_e`
+**Check:** A longer objective focal length and shorter eyepiece focal length increase telescope angular magnification. Magnification by itself cannot overcome the diffraction resolution limit.
+
+#### Diffraction resolution and Bragg’s law
+**Concept:** A finite aperture spreads a point source into a diffraction pattern. Crystal-plane reflections interfere according to their path difference.
+**Assumptions:** Circular aperture of diameter D; small angular separation; for Bragg reflection, parallel lattice planes separated by d with θ measured from the planes.
+1. The circular-aperture diffraction solution has its first dark ring at sin θ ≈ 1.22λ/D. The coefficient 1.22 comes from adding waves over a circle, not from dimensional analysis.
+2. Rayleigh’s criterion takes the peak of one point image at the first minimum of the other, giving θ_min ≈ 1.22λ/D in radians.
+3. For rays reflected from adjacent crystal planes, the lower ray travels an extra d sin θ on entering and d sin θ on leaving.
+4. Constructive interference requires the total extra distance 2d sin θ to equal mλ.
+**Result:** `θ_min ≈ 1.22λ/D; 2d sin θ = mλ`
+**Check:** Doubling aperture diameter halves the diffraction-limited angular separation. In Bragg’s law the angle is to the crystal planes, unlike a refraction angle measured from a normal.
+**Scope reference:** [34. Images](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-34), [36. Diffraction](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-36)
 
 ### Worked example
 An astronomical telescope has an objective focal length of 1.00 m and an eyepiece focal length of 0.0250 m. Find angular magnification.
@@ -906,6 +1483,31 @@ At low speeds, relativistic expressions approach Newtonian ones. Rest energy bel
 - `p = γmv; E = γmc²; K = (γ − 1)mc²; E² = p²c² + m²c⁴` — m is invariant rest mass; E is total energy.
 - `u = (u′ + v)/(1 + u′v/c²)` — Collinear velocity transformation between frames in standard configuration.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Time dilation and length contraction
+**Concept:** The same light pulse has speed c in every inertial frame. Different path lengths therefore require different elapsed times.
+**Assumptions:** Inertial frames with relative speed v < c; proper time is measured where the two clock events occur at one location; lengths use simultaneous endpoint measurements in the measuring frame.
+1. A light clock has mirror spacing d perpendicular to its motion. In its rest frame, half a round trip takes Δτ/2 = d/c.
+2. In a frame where the clock moves at v, a half-trip is diagonal: (cΔt/2)² = d² + (vΔt/2)².
+3. Insert d = cΔτ/2 and solve: Δt = Δτ/√(1 − v²/c²) = γΔτ.
+4. To measure a moving rod of rest length L₀, record endpoints simultaneously in the lab: Δt = 0. The Lorentz transformation gives Δx′ = γ(Δx − vΔt), so L₀ = γL.
+5. For a particle, the inverse transformations give dx = γ(dx′ + vdt′) and dt = γ(dt′ + vdx′/c²). Divide to obtain u = (u′ + v)/(1 + u′v/c²).
+**Result:** `γ = 1/√(1 − v²/c²); Δt = γΔτ; L = L₀/γ; u = (u′ + v)/(1 + u′v/c²)`
+**Check:** As v/c approaches zero, γ approaches one and the velocity rule approaches u′ + v. If u′ = c, the transformed velocity is still c.
+
+#### Relativistic energy and the classical limit
+**Concept:** Relativistic energy and momentum form a consistent pair. Their invariant relation separates rest energy from kinetic energy.
+**Assumptions:** Free particle of invariant rest mass m; p = γmv and E = γmc² are relativistic physical relations.
+1. Substitute E and p into E² − p²c²: γ²m²c⁴ − γ²m²v²c² = γ²m²c⁴(1 − v²/c²) = m²c⁴.
+2. At rest γ = 1, so E_rest = mc². Subtract rest energy to obtain K = (γ − 1)mc².
+3. For v ≪ c, expand γ ≈ 1 + ½v²/c². Then K ≈ ½mv², recovering the classical equation.
+4. For a massless particle, the invariant relation reduces to E = pc. A photon therefore has momentum despite zero rest mass.
+**Result:** `E² = p²c² + m²c⁴; K = (γ − 1)mc²; E_photon = pc`
+**Check:** The low-speed limit is a check of consistency. E = pc applies to a massless particle; it is not the general energy equation for a massive body.
+**Scope reference:** [37. Relativity](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-37)
+
 ### Worked example
 A spacecraft passes Earth at 0.800c. Its own clock measures 3.00 years between two ticks. What interval does Earth’s inertial frame assign?
 
@@ -941,6 +1543,31 @@ Discrete spectral lines show that atomic energies are quantized. The Bohr model 
 - `E_photon = hf = hc/λ; p_photon = h/λ; λ_matter = h/p` — h = 6.626 × 10⁻³⁴ J·s; use p ≈ mv only for nonrelativistic matter.
 - `K_max = hf − φ; eV_stop = K_max; f_threshold = φ/h` — Emission requires hf ≥ φ; V_stop denotes a positive stopping-potential magnitude.
 - `E_n = −13.6 Z²/n² eV; hf = |E_f − E_i|` — Approximate hydrogen-like, one-electron energy levels; Z is nuclear charge number.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Photons, matter waves, and the photoelectric equation
+**Concept:** Photon energy and matter wavelength are quantum starting relations. Energy conservation then determines photoelectron energies.
+**Assumptions:** Single-photon photoelectric model for a clean surface with work function φ; V_stop is a positive stopping-voltage magnitude.
+1. Use the quantum relation E = hf and the vacuum wave relation c = fλ to obtain E_photon = hc/λ.
+2. For a photon E = pc, so p = E/c = h/λ. Matter waves obey the de Broglie relation λ = h/p as a separate quantum principle.
+3. A photon supplies hf; at least φ is needed to remove the electron. The largest remaining electron kinetic energy is K_max = hf − φ.
+4. A stopping potential removes kinetic energy eV_stop, so eV_stop = K_max. At the emission threshold K_max = 0, giving f_threshold = φ/h.
+**Result:** `E_photon = hf = hc/λ; λ_matter = h/p; K_max = hf − φ = eV_stop`
+**Check:** Below threshold this model predicts no emission even if intensity increases. Above threshold, greater intensity mainly increases electron count; greater frequency increases K_max.
+
+#### Hydrogen-like energy levels in the Bohr model
+**Concept:** Coulomb attraction supplies circular acceleration, while Bohr’s historical angular-momentum postulate selects allowed orbits.
+**Assumptions:** One electron around charge +Ze; nonrelativistic Bohr model with a very heavy stationary nucleus. Modern quantum mechanics replaces the literal orbit picture.
+1. Force balance gives m_ev²/r = k_eZe²/r². Bohr’s postulate is m_evr = nħ for n = 1, 2, … .
+2. Eliminate v to obtain r_n = n²ħ²/(m_ek_eZe²).
+3. Kinetic energy is ½m_ev² = k_eZe²/(2r), while potential energy is −k_eZe²/r. Thus E = −k_eZe²/(2r).
+4. Insert r_n to obtain E_n = −m_ek_e²Z²e⁴/(2n²ħ²) ≈ −13.6 Z²/n² eV.
+5. For a transition, energy conservation requires hf = |E_f − E_i|, with emission for a downward transition and absorption for an upward one.
+**Result:** `E_n ≈ −13.6 Z²/n² eV; hf = |E_f − E_i|`
+**Check:** The negative energy means the electron is bound relative to the zero at infinite separation. The formula does not describe general many-electron atoms.
+**Scope reference:** [38. Photons and Matter Waves](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-38), [40. All About Atoms](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-40)
 
 ### Worked example
 A 400 nm photon strikes a surface with work function 2.00 eV. Find the maximum photoelectron kinetic energy. Use hc ≈ 1240 eV·nm.
@@ -978,6 +1605,30 @@ The Pauli exclusion principle prevents two electrons in an atom from sharing all
 - `n = 1, 2, …; ℓ = 0, …, n−1; m_ℓ = −ℓ, …, +ℓ; m_s = ±½` — Allowed quantum numbers for a bound electron in the atomic model.
 - `L = √[ℓ(ℓ+1)] ħ; L_z = m_ℓ ħ` — Orbital angular momentum magnitude and its chosen-axis component.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Confinement and the particle-in-a-box spectrum
+**Concept:** A confined matter wave must satisfy boundary conditions. Only certain wavelengths fit, so only certain momenta and energies are allowed.
+**Assumptions:** One nonrelativistic particle of mass m in a one-dimensional infinite square well from x = 0 to x = L.
+1. The wavefunction vanishes at both walls. As for a fixed-end standing wave, L = nλ/2, so λ_n = 2L/n.
+2. Use p = h/λ to find momentum magnitude p_n = nh/(2L). Then E_n = p_n²/(2m) = n²h²/(8mL²).
+3. The stationary wavefunction is ψ_n = A sin(nπx/L). Normalization requires ∫₀ᴸ|ψ_n|²dx = 1. The integral of sin² over this interval is L/2, so A = √(2/L).
+4. If a photon drives a transition, its energy must equal the difference between the two allowed levels.
+**Result:** `E_n = n²h²/(8mL²); ψ_n(x) = √(2/L) sin(nπx/L), n = 1, 2, …`
+**Check:** The lowest allowed energy is positive. Halving the well width quadruples every level energy; tighter confinement raises the kinetic-energy scale.
+
+#### Uncertainty and counting atomic states
+**Concept:** A localized matter wave combines a spread of wave numbers. Atomic angular-momentum values and quantum numbers follow from quantum wave mechanics.
+**Assumptions:** σ denotes standard deviation. Atomic state counting uses the central-field quantum numbers and two electron spin states.
+1. Fourier wave analysis gives σ_xσ_k ≥ ½. With pₓ = ħkₓ, multiply by ħ to obtain σ_xσ_pₓ ≥ ħ/2. This is a quantum wave result, not an effect of poor instruments.
+2. Angular wave solutions have L² eigenvalues ℓ(ℓ+1)ħ² and L_z eigenvalues m_ℓħ. Taking the positive square root gives |L| = √[ℓ(ℓ+1)]ħ.
+3. For fixed principal quantum number n, allowed ℓ values are 0 through n−1. For each ℓ, m_ℓ runs from −ℓ to +ℓ, giving 2ℓ+1 orbital states.
+4. Each orbital permits two spin states m_s = ±½. Sum 2Σ(2ℓ+1) from ℓ = 0 to n−1 to get a shell capacity of 2n² electrons under the Pauli principle.
+**Result:** `σ_xσ_pₓ ≥ ħ/2; |L| = √[ℓ(ℓ+1)]ħ; L_z = m_ℓħ; shell capacity = 2n²`
+**Check:** The Bohr value nħ is not the modern orbital magnitude formula. An s orbital has ℓ = 0 and zero orbital angular momentum even though its electron has nonzero kinetic energy.
+**Scope reference:** [38. Photons and Matter Waves](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-38), [39. More About Matter Waves](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-39), [40. All About Atoms](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-40)
+
 ### Worked example
 How many distinct electron states can occupy a 2p subshell?
 
@@ -1012,6 +1663,30 @@ Donor doping creates n-type material with mobile electrons; acceptor doping crea
 ### Essential equations
 - `E_vib = (ν + ½)hf, ν = 0, 1, 2, …` — Ideal quantum harmonic vibration; level spacing is hf.
 - `E_rot = ℓ(ℓ + 1)ħ²/(2I); E_photon ≈ E_gap` — Rigid-rotor model; the band-gap photon relation is an ideal estimate for direct-gap emission.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Molecular vibration and rotation
+**Concept:** Near a stable bond length, a molecule behaves approximately like a spring. Rotation contributes a separate quantized energy.
+**Assumptions:** Diatomic molecule near equilibrium; harmonic vibration, rigid-rotor approximation, no strong vibration–rotation coupling.
+1. For displacement x of the bond length, approximate U(x) = U_min + ½kx². The relative coordinate uses reduced mass μ = m₁m₂/(m₁+m₂).
+2. The classical vibration frequency is f = (1/2π)√(k/μ). Solving the quantum harmonic oscillator gives E_vib = (ν + ½)hf with ν = 0, 1, 2, … .
+3. A rigid rotor has classical energy L²/(2I). Substitute the quantum value L² = ℓ(ℓ+1)ħ² to obtain E_rot = ℓ(ℓ+1)ħ²/(2I).
+4. Allowed transitions require energy matching ΔE = hf_photon; additional selection rules determine which transitions actually occur.
+**Result:** `E_vib = (ν + ½)hf; E_rot = ℓ(ℓ+1)ħ²/(2I)`
+**Check:** Harmonic vibrational levels have equal spacing hf, while rotor spacings grow with ℓ. The vibration ground state retains zero-point energy.
+
+#### Band gaps, emitted light, and conduction
+**Concept:** In a solid, many atomic states form bands. An electron changing bands transfers an energy approximately set by the band gap.
+**Assumptions:** Simple band model; E_photon ≈ E_gap applies to ideal direct-gap radiative transitions near band edges. The one-carrier drift model is a simplified conduction model.
+1. For an electron dropping from the conduction-band edge to a hole at the valence-band edge, energy conservation gives E_photon ≈ E_gap.
+2. Use E_photon = hc/λ to find λ ≈ hc/E_gap, or λ(nm) ≈ 1240/E_gap(eV).
+3. For one carrier species, current density magnitude is J = n_c|q|v_d. If v_d = μ_dE with mobility μ_d, then J = n_c|q|μ_dE.
+4. Compare with J = E/ρ to find resistivity ρ = 1/(n_c|q|μ_d). A semiconductor with both electrons and holes requires their conductivity contributions to be added.
+**Result:** `E_photon ≈ E_gap; λ ≈ hc/E_gap; ρ = 1/(n_c|q|μ_d) (one carrier type)`
+**Check:** A larger direct band gap produces shorter-wavelength light. Carrier density and mobility both affect conductivity; a band-gap value alone does not determine a material’s resistance.
+**Scope reference:** [40. All About Atoms](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-40), [41. Conduction of Electricity in Solids](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-41)
 
 ### Worked example
 Estimate the emission wavelength of an ideal LED with a 2.00 eV transition. Use hc = 1240 eV·nm.
@@ -1048,6 +1723,30 @@ A decay constant specifies the probability rate for each surviving nucleus. The 
 - `N(t) = N₀e^(−λt) = N₀2^(−t/T½); T½ = ln 2/λ` — λ is the decay constant; T½ is half-life; time units must agree.
 - `A_activity = λN; E_binding = Δmc²; 1 u·c² ≈ 931.5 MeV` — Activity is measured in Bq = s⁻¹. A_activity is distinct from mass number A.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Exponential decay, activity, and half-life
+**Concept:** Each surviving nucleus has the same decay probability per unit time. The number decaying per unit time is therefore proportional to the number still present.
+**Assumptions:** One parent species, constant decay constant λ, no replenishment; N is a large-sample expectation.
+1. Write dN/dt = −λN. Separate variables: dN/N = −λdt.
+2. Integrate from N₀ at 0 to N at t: ln(N/N₀) = −λt. Exponentiate to obtain N = N₀e^(−λt).
+3. At t = T½, N/N₀ = ½. Thus ln(½) = −λT½ and T½ = ln 2/λ.
+4. Insert λ = ln 2/T½ to rewrite N = N₀2^(−t/T½). Activity counts decays per second: A_activity = −dN/dt = λN.
+**Result:** `N = N₀e^(−λt) = N₀2^(−t/T½); T½ = ln 2/λ; A_activity = λN`
+**Check:** After three half-lives, one eighth of the original parent population remains. Half-life is a population statistic, not a scheduled lifetime of an individual nucleus.
+
+#### Nuclear size and binding energy
+**Concept:** Nuclei have approximately constant interior nucleon density. A bound nucleus also has less mass than its separated nucleons because energy was released on binding.
+**Assumptions:** Spherical nuclear-size estimate; use consistent nuclear masses, or neutral atomic masses with electron contributions properly accounted for.
+1. If nuclear volume is proportional to nucleon count A, then (4/3)πR³ is proportional to A. Hence R = r₀A^(1/3), with empirical r₀ about 1.2 fm.
+2. For Z protons and N neutrons, the separated nuclear mass is Zm_p + Nm_n. Define mass defect Δm = Zm_p + Nm_n − M_nucleus.
+3. Mass–energy equivalence gives binding energy E_binding = Δmc². Dividing by A gives binding energy per nucleon.
+4. A mass difference of 1 u corresponds to about 931.5 MeV/c², so E_binding(MeV) ≈ Δm(u) × 931.5.
+**Result:** `R ≈ r₀A^(1/3); E_binding = Δmc²; 1 u·c² ≈ 931.5 MeV`
+**Check:** Binding energy is positive for a stable bound nucleus. Mixing neutral atomic masses with bare proton masses introduces electron-mass errors.
+**Scope reference:** [42. Nuclear Physics](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-42)
+
 ### Worked example
 A sample initially contains 8.00 × 10⁶ parent nuclei with a 6.00 h half-life. Find the expected number remaining after 18.0 h and its activity then.
 
@@ -1082,6 +1781,29 @@ Radioactive tracers allow emitted radiation to map a substance’s distribution.
 ### Essential equations
 - `Q_reaction = (Σm_initial − Σm_final)c²` — Positive Q is released energy. Mass and charge conventions must be consistent.
 - `D_abs = E_deposited/m; H_equiv = w_R D_abs` — Absorbed dose in Gy = J/kg; equivalent dose in Sv. Sum contributions for mixed radiation types.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Reaction energy, fission, and fusion
+**Concept:** The change in total rest mass sets the energy available to products. Fission or fusion releases energy when it leads to more tightly bound products.
+**Assumptions:** Consistent initial and final mass conventions; include every reaction product and relevant excitation state.
+1. Energy conservation reads Σm_initial c² + K_initial = Σm_final c² + K_final when all included energy terms are counted.
+2. Rearrange: Q_reaction = (Σm_initial − Σm_final)c² = K_final − K_initial. Positive Q means released rest energy.
+3. Expressing masses through nucleon masses minus binding energies shows Q = total final binding energy − total initial binding energy when nucleon counts are unchanged.
+4. The binding-energy-per-nucleon curve rises toward intermediate nuclei. Splitting suitable heavy nuclei or combining suitable light nuclei can therefore give positive Q. Charge, momentum, and other conservation laws still apply.
+**Result:** `Q_reaction = (Σm_initial − Σm_final)c²`
+**Check:** A positive Q does not remove a reaction barrier. Fusion still requires overcoming or tunnelling through electrostatic repulsion.
+
+#### Absorbed and equivalent radiation dose
+**Concept:** Absorbed dose counts deposited energy per mass. Equivalent dose applies a specified radiation weighting factor to that absorbed dose.
+**Assumptions:** Energy deposited in the stated tissue mass; w_R is the specified radiation-type weighting factor. These definitions are for physics bookkeeping.
+1. Divide deposited energy E_deposited by irradiated mass m: D_abs = E_deposited/m, with 1 Gy = 1 J/kg.
+2. For one radiation type, define H_equiv = w_R D_abs in sieverts.
+3. For mixed radiation, add contributions: H_equiv = Σw_R D_R. Activity in becquerels counts decays per second and cannot be converted to dose without deposition and exposure information.
+**Result:** `D_abs = E_deposited/m; H_equiv = Σw_R D_R`
+**Check:** The same deposited energy in twice the mass gives half the absorbed dose. Equivalent dose and effective dose are different quantities; the latter also uses tissue weighting.
+**Scope reference:** [42. Nuclear Physics](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-42), [43. Energy from the Nucleus](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-43)
 
 ### Worked example
 A hypothetical nuclear reaction has an initial-to-final rest-mass decrease of 0.200 u. Find the released energy.
@@ -1118,6 +1840,20 @@ Check electric charge, energy, momentum, angular momentum, and the relevant part
 - `q_u = +⅔e; q_d = −⅓e; proton = uud; neutron = udd` — Valence-quark charge accounting; antiquarks carry opposite electric charge.
 - `E² = p²c² + m²c⁴; E_CM ≥ Σm_final c²` — The second relation is a necessary energy threshold in the centre-of-momentum frame; other conservation laws must also hold.
 
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Quark charges and particle-production thresholds
+**Concept:** Composite-particle charges add. Collision energy available in the centre-of-momentum frame sets a necessary threshold for making massive products.
+**Assumptions:** Valence-quark charge accounting; special-relativistic energy and momentum conservation for the complete initial state.
+1. Use q_u = +⅔e and q_d = −⅓e. A proton uud has charge ⅔e + ⅔e − ⅓e = +e; a neutron udd has charge ⅔e − ⅓e − ⅓e = 0.
+2. Antiquarks have opposite charges. These fractions are physical inputs to the quark model, not consequences of the arithmetic.
+3. For total initial lab energy E_total and total momentum P_total, the invariant centre-of-momentum energy obeys E_CM² = E_total² − c²|P_total|².
+4. At the ideal threshold, final particles have no relative kinetic energy in that frame. Therefore E_CM must be at least Σm_final c²; additional conservation laws may forbid a proposed final state.
+**Result:** `q_proton = +e; q_neutron = 0; E_CM = √(E_total² − c²|P_total|²) ≥ Σm_final c²`
+**Check:** Opposing equal-momentum collider beams have P_total = 0. A fixed-target beam generally spends some lab energy on overall product motion, so lab energy alone is not the available creation energy.
+**Scope reference:** [44. Quarks, Leptons, and the Big Bang](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-44)
+
 ### Worked example
 Use valence quark charges to find the charges of a proton and a neutron.
 
@@ -1153,6 +1889,29 @@ General relativity describes gravity through spacetime geometry, with light and 
 - `F_received = L/(4πd²); d(parsecs) = 1/p(arcseconds)` — Isotropic emission without intervening absorption; stellar parallax p is the annual parallax angle.
 - `z = (λ_observed − λ_emitted)/λ_emitted; v ≈ cz; v ≈ H₀d` — The speed approximation is for small redshift; the linear distance law is a nearby-universe approximation.
 - `r_s = 2GM/c²` — Schwarzschild radius of a nonrotating, uncharged black hole.
+
+### Equation explanations & derivations
+Original explanations mapped to the topic scope of the university review. A derivative is an instantaneous rate; an integral adds small contributions. Definitions and physical laws are stated as starting points.
+
+#### Inverse-square brightness and parallax distance
+**Concept:** Luminosity spreads over a growing spherical area. Parallax instead finds distance from a geometric baseline and a small angular shift.
+**Assumptions:** Isotropic emission without absorption; source distance much larger than its size. Annual stellar parallax p uses a baseline radius of 1 astronomical unit.
+1. A source with luminosity L sends that power through a sphere of area 4πd², so received flux is F = L/(4πd²).
+2. For a small parallax angle, p_radians ≈ 1 AU/d. By definition, 1 parsec is the distance where 1 AU subtends 1 arcsecond.
+3. Using the same angular units therefore gives d(parsecs) = 1/p(arcseconds).
+**Result:** `F_received = L/(4πd²); d(pc) = 1/p(arcsec)`
+**Check:** Doubling distance quarters received flux and halves parallax. Apparent brightness alone cannot give distance unless luminosity is known or estimated.
+
+#### Redshift, Hubble’s law, and an escape-speed analogy
+**Concept:** Redshift measures a wavelength ratio. Nearby expansion admits a linear speed–distance approximation; black-hole horizons require general relativity.
+**Assumptions:** Small redshift for v ≈ cz; nearby-universe Hubble approximation; a nonrotating uncharged black hole for r_s.
+1. Define z = (λ_observed − λ_emitted)/λ_emitted. For small relative recession speeds, the Doppler expansion gives z ≈ v/c, hence v ≈ cz.
+2. The observed nearby expansion relation is v ≈ H₀d. Combining the approximations gives d ≈ cz/H₀. This estimates distance only within the approximation’s range.
+3. Newtonian escape energy sets ½mv_escape² − GMm/r = 0, giving v_escape = √(2GM/r).
+4. Formally setting this Newtonian expression equal to c gives r = 2GM/c². This reproduces the Schwarzschild radius algebraically, but the existence and meaning of an event horizon follow from general relativity.
+**Result:** `z = Δλ/λ_emitted; v ≈ cz ≈ H₀d (nearby); r_s = 2GM/c²`
+**Check:** H₀ has dimensions inverse time. At large cosmological redshift, interpreting cz as a physical recession speed fails; the simple nearby distance conversion must be replaced.
+**Scope reference:** [13. Gravitation](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-13), [44. Quarks, Leptons, and the Big Bang](https://cghuisunshine.github.io/Physics_uni/Physics_Review_and_Summary_Tutorial.html#chapter-44)
 
 ### Worked example
 For a nearby galaxy with redshift z = 0.0100, estimate distance using c ≈ 3.00 × 10⁵ km/s and an assumed H₀ = 70.0 km/s/Mpc.

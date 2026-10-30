@@ -8,6 +8,7 @@ import re
 import sys
 
 from physics12_content import CHAPTERS, CONSTANTS
+from physics12_derivations import REVIEW_URL, REVIEW_CHAPTERS
 
 ROOT = Path(__file__).resolve().parents[1]
 esc = html.escape
@@ -87,6 +88,18 @@ def outline():
         lines += ['\n### Essential equations']
         for expression, note in c['formulas']:
             lines += [f'- `{expression}` — {note}']
+        lines += ['\n### Equation explanations & derivations',
+                  'Original explanations mapped to the topic scope of the university review. '
+                  'A derivative is an instantaneous rate; an integral adds small contributions. '
+                  'Definitions and physical laws are stated as starting points.']
+        for item in c['derivations']['items']:
+            lines += [f'\n#### {item["title"]}', f'**Concept:** {item["concept"]}',
+                      f'**Assumptions:** {item["assumptions"]}']
+            lines += [f'{i}. {step}' for i, step in enumerate(item['steps'], 1)]
+            lines += [f'**Result:** `{item["result"]}`', f'**Check:** {item["check"]}']
+        lines += ['**Scope reference:** ' + ', '.join(
+            f'[{n}. {REVIEW_CHAPTERS[n]}]({REVIEW_URL}#chapter-{n})'
+            for n in c['derivations']['review_chapters'])]
         lines += ['\n### Worked example', c['example'], '\n### Solution']
         lines += [f'{i}. {text}' for i, text in enumerate(c['steps'], 1)]
         lines += [f'**Answer:** {c["answer"]}', '\n### Common trap', c['pitfall'],
@@ -94,6 +107,33 @@ def outline():
         lines += [f'- {text}' for text in c['quiz']['options']]
         lines += [f'**Answer:** {c["quiz"]["options"][c["quiz"]["correct"]]}. {c["quiz"]["explanation"]}']
     return '\n'.join(lines) + '\n'
+
+
+def derivations(chapter):
+    n = chapter['number']
+    items = []
+    for i, item in enumerate(chapter['derivations']['items'], 1):
+        opened = ' open' if i == 1 else ''
+        items.append(
+            f'<details class="derivation" id="derivation-{n}-{i}"{opened}>'
+            f'<summary>{esc(item["title"])}</summary><div class="derivation-body">'
+            f'<p><strong>Concept.</strong> {esc(item["concept"])}</p>'
+            f'<p class="derivation-assumptions"><strong>Assumptions & starting points.</strong> {esc(item["assumptions"])}</p>'
+            '<ol>' + ''.join(f'<li>{esc(step)}</li>' for step in item['steps']) + '</ol>'
+            f'<div class="equation derivation-result"><small>Result</small><code>{esc(item["result"])}</code></div>'
+            f'<p class="derivation-check"><strong>Check & interpretation.</strong> {esc(item["check"])}</p>'
+            '</div></details>')
+    references = ' · '.join(
+        f'<a href="{REVIEW_URL}#chapter-{r}" target="_blank" rel="noopener">{r}. {esc(REVIEW_CHAPTERS[r])}</a>'
+        for r in chapter['derivations']['review_chapters'])
+    return (f'<section class="derivations" aria-labelledby="derivations-{n}">'
+            f'<h3 id="derivations-{n}">Equation explanations & derivations</h3>'
+            '<p class="derivation-intro">Follow the idea → assumptions → steps → result → check. '
+            'Open a title to study another explanation. A derivative is an instantaneous rate; '
+            'an integral adds small contributions. Physical laws and quantum principles are starting points.</p>'
+            + ''.join(items)
+            + f'<p class="derivation-sources">University review topic links: {references}. '
+            'These explanations are written for this tutorial.</p></section>')
 
 
 def enrich_sections(rendered):
@@ -117,13 +157,13 @@ def enrich_sections(rendered):
                 '<div class="quiz-options" role="group" aria-label="Answer choices">'
                 + ''.join(f'<button type="button" data-choice="{i}" aria-pressed="false">{chr(65+i)}. {esc(option)}</button>' for i, option in enumerate(c['quiz']['options']))
                 + '</div><p class="feedback" role="status" hidden></p></section>')
-        body = (concepts + diagram(n) + '<h3>Essential equations</h3>' + formulas + lab(n) + example
+        body = (concepts + diagram(n) + '<h3>Essential equations</h3>' + formulas + derivations(c) + lab(n) + example
                 + f'<aside class="pitfall"><strong>Common trap</strong><p>{esc(c["pitfall"])}</p></aside>' + quiz)
         card = (f'<section class="chapter" id="chapter-{n}" data-number="{n}" data-subject="{esc(c["group"])}" data-match="true">'
                 f'<header class="chapter-head"><span class="chapter-no" aria-hidden="true">{n:02d}</span><div><div class="chapter-meta"><span>{esc(c["group"])}</span>'
                 f'<a href="Physics12.pdf#page={c["start"]+21}" target="_blank" rel="noopener">Book pp. {c["start"]}–{c["end"]} ↗</a></div>'
                 f'<h2>{n}. {esc(c["title"])}</h2><p class="goal">{esc(c["goal"])}</p></div></header>'
-                f'<details class="lesson" open><summary>Lesson, example & self-check</summary><div class="lesson-body">{body}</div></details>'
+                f'<details class="lesson" open><summary>Lesson, derivations, example & self-check</summary><div class="lesson-body">{body}</div></details>'
                 f'<div class="chapter-foot"><label><input type="checkbox" data-complete="{n}"> Mark chapter studied</label>'
                 f'<a href="Physics12.pdf#page={c["start"]+21}" target="_blank" rel="noopener">Read chapter {n} in the book ↗</a></div></section>')
         cards.append(card)
@@ -157,7 +197,8 @@ def main():
     formulas = ''.join(f'<div><h4><a href="#chapter-{c["number"]}">{c["number"]}. {esc(c["title"])}</a></h4>' + ''.join(f'<p><code>{esc(f)}</code><br><small>{esc(note)}</small></p>' for f, note in c['formulas']) + '</div>' for c in CHAPTERS)
     payload = {str(c['number']): c['quiz'] for c in CHAPTERS}
     script = 'const PHYSICS12_QUIZZES = ' + json.dumps(payload, ensure_ascii=False).replace('<', '\\u003c') + ';\n' + (ROOT / 'tools/physics12-tutorial.js').read_text()
-    for key, value in {'NAVIGATION': ''.join(navigation), 'ROADMAP': ''.join(roadmap), 'SUBJECTS': ''.join(f'<option>{esc(g)}</option>' for g in groups), 'CONSTANTS': constants, 'FORMULAS': formulas, 'SCRIPT': script}.items():
+    count = sum(len(c['derivations']['items']) for c in CHAPTERS)
+    for key, value in {'DERIVATION_COUNT': str(count), 'NAVIGATION': ''.join(navigation), 'ROADMAP': ''.join(roadmap), 'SUBJECTS': ''.join(f'<option>{esc(g)}</option>' for g in groups), 'CONSTANTS': constants, 'FORMULAS': formulas, 'SCRIPT': script}.items():
         page = page.replace(f'%%{key}%%', value)
     # Avoid unsupported combining-arrow glyphs in system fonts. Preserve script
     # strings as plain text and use a CSS vector arrow for rendered lesson text.
@@ -168,7 +209,7 @@ def main():
     (ROOT / 'physics12-tutorial.html').write_text(page)
     (ROOT / 'content/physics12/tutorial-outline.md').write_text(md)
     (ROOT / 'content/physics12/chapters.json').write_text(json.dumps(CHAPTERS, ensure_ascii=False, indent=2) + '\n')
-    print(f'Built physics12-tutorial.html: {len(CHAPTERS)} chapters, 33 examples, 33 checks, 4 labs; {len(page.encode()):,} bytes.')
+    print(f'Built physics12-tutorial.html: {len(CHAPTERS)} chapters, {count} equation explanations, 33 examples, 33 checks, 4 labs; {len(page.encode()):,} bytes.')
 
 
 if __name__ == '__main__':
