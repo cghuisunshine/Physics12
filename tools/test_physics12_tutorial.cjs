@@ -12,6 +12,8 @@ function open({url='https://example.test/physics12-tutorial.html', saved, blocke
   const dom=new JSDOM(html,{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc,beforeParse(w){
     w.HTMLElement.prototype.scrollIntoView=()=>{};
     w.print=()=>{};
+    w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');};
+    w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');this.dispatchEvent(new w.Event('close'));};
     if(blocked) Object.defineProperty(w,'localStorage',{get(){throw Error('Storage unavailable');}});
     else if(saved)w.localStorage.setItem(key,saved);
   }});
@@ -32,6 +34,14 @@ try {
   assert.equal(d.querySelectorAll('.derivations').length,33);
   assert.equal(d.querySelectorAll('.derivation').length,62);
   assert.equal(d.querySelectorAll('.derivation[open]').length,33);
+  assert.equal(d.querySelectorAll('.teaching-visual').length,161);
+  assert.equal(d.querySelectorAll('.visual-answer').length,161);
+  assert.equal(d.querySelectorAll('.visual-answer[open]').length,0);
+  for(const section of d.querySelectorAll('.concept,.derivation')){
+    const figure=section.querySelector('.teaching-visual');assert.ok(figure,section.id);
+    assert.ok(figure.querySelector('svg[role=img] title').textContent);
+    assert.ok(figure.querySelector('svg desc').textContent);
+  }
   const reviewChapters=new Set([...d.querySelectorAll('.derivation-sources a')].map(a=>Number(a.hash.split('-').pop())));
   assert.deepEqual([...reviewChapters].sort((a,b)=>a-b),Array.from({length:44},(_,i)=>i+1));
   assert.equal(d.querySelectorAll('script[src],link[rel=stylesheet],iframe').length,0);
@@ -39,6 +49,16 @@ try {
   const ids=[...d.querySelectorAll('[id]')].map(e=>e.id);
   assert.equal(new Set(ids).size,ids.length);
   for(const a of d.querySelectorAll('a[href^="#"]'))assert.ok(d.querySelector(a.getAttribute('href')),a.getAttribute('href'));
+  // Diagram enlargement must remain labelled and avoid duplicating SVG IDs.
+  const picture=$('visual-concept-3-1'), opener=picture.querySelector('.visual-enlarge');
+  opener.click();assert.ok($('visual-dialog').open);
+  assert.equal($('visual-dialog-title').textContent,picture.querySelector('.visual-heading strong').textContent);
+  assert.equal($('visual-dialog-image').querySelectorAll('[id]').length,0);
+  $('visual-zoom-in').click();assert.equal($('visual-zoom-level').textContent,'125%');
+  $('visual-zoom-out').click();assert.equal($('visual-zoom-level').textContent,'100%');
+  assert.ok($('visual-zoom-out').disabled);
+  $('visual-dialog-close').click();assert.ok(!$('visual-dialog').open);assert.equal(d.activeElement,opener);
+  assert.equal($('visual-dialog-image').children.length,0);
   for(const c of chapters){
     const card=$(`chapter-${c.number}`);assert.ok(card);
     for(const [title,text] of c.concepts){assert.ok(card.textContent.includes(title));assert.ok(card.textContent.includes(text.replace(/\u20d7/g,'')));}
@@ -65,10 +85,14 @@ try {
   // Printing opens even unselected explanations in matching chapters only,
   // and then restores both lesson and nested explanation states.
   const otherExtension=$('derivation-17-2');otherExtension.open=false;
+  const prediction=gasExtension.querySelector('.visual-answer'),otherPrediction=otherExtension.querySelector('.visual-answer');
+  prediction.open=false;otherPrediction.open=false;
   w.dispatchEvent(new w.Event('beforeprint'));
   assert.ok(gasExtension.open&&entropyExtension.open);assert.ok(!otherExtension.open);
+  assert.ok(prediction.open);assert.ok(!otherPrediction.open);
   w.dispatchEvent(new w.Event('afterprint'));
   assert.ok(!gasExtension.open&&entropyExtension.open);assert.ok(!otherExtension.open);
+  assert.ok(!prediction.open&&!otherPrediction.open);
   input('search','');
   input('search','half-life');assert.ok(shown().some(e=>e.id==='chapter-30'));
   d.querySelector('[data-nav-chapter="3"]').click();assert.equal($('search').value,'');assert.equal(w.location.hash,'#chapter-3');
@@ -99,5 +123,5 @@ try {
   input('decay-time',6);assert.match($('decay-result').textContent,/50\.000%/);
   for(const id of ['projectile-path','interference-path','decay-path'])assert.ok(!/NaN|Infinity/.test($(id).getAttribute('d')));
   assert.deepEqual(errors,[]);
-  console.log('Passed: all 33 chapters; 62 equation explanations mapped to 44 review chapters; derivation search and filtered print restoration; quizzes and hidden solutions; search/subject filters; three reading modes; navigation/deep links; local progress and unavailable storage; print state; four models with numerical and limiting-case checks.');
+  console.log('Passed: all 33 chapters; 161 accessible teaching pictures across 99 concepts and 62 equation explanations; diagram enlargement/zoom/focus; prediction answers and filtered print restoration; 44 review chapter links; quizzes and solutions; filters and reading modes; navigation; local progress; four physical models.');
 } finally {w.close();}

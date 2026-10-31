@@ -9,6 +9,7 @@ import sys
 
 from physics12_content import CHAPTERS, CONSTANTS
 from physics12_derivations import REVIEW_URL, REVIEW_CHAPTERS
+from physics12_visuals import CONCEPT_VISUALS, DERIVATION_VISUALS, VISUALS, validate_visuals, visual
 
 ROOT = Path(__file__).resolve().parents[1]
 esc = html.escape
@@ -83,8 +84,11 @@ def outline():
              '@subtitle: A guided study of all 33 chapters in Physics12.pdf.']
     for c in CHAPTERS:
         lines += [f'\n## {c["number"]} {c["title"]}', f'> {c["goal"]}']
-        for name, text in c['concepts']:
+        for (name, text), key in zip(c['concepts'], CONCEPT_VISUALS[c['number']]):
             lines += [f'\n### {name}', text]
+            picture = VISUALS[key]
+            lines += ['', f'**Picture — {picture["title"]}:** {picture["guide"]}',
+                      f'**Predict:** {picture["question"]}', f'**Check:** {picture["answer"]}']
         lines += ['\n### Essential equations']
         for expression, note in c['formulas']:
             lines += [f'- `{expression}` — {note}']
@@ -92,9 +96,12 @@ def outline():
                   'Original explanations mapped to the topic scope of the university review. '
                   'A derivative is an instantaneous rate; an integral adds small contributions. '
                   'Definitions and physical laws are stated as starting points.']
-        for item in c['derivations']['items']:
+        for item, key in zip(c['derivations']['items'], DERIVATION_VISUALS[c['number']]):
             lines += [f'\n#### {item["title"]}', f'**Concept:** {item["concept"]}',
                       f'**Assumptions:** {item["assumptions"]}']
+            picture = VISUALS[key]
+            lines += [f'**Picture — {picture["title"]}:** {picture["guide"]}',
+                      f'**Predict:** {picture["question"]}', f'**Check:** {picture["answer"]}']
             lines += [f'{i}. {step}' for i, step in enumerate(item['steps'], 1)]
             lines += [f'**Result:** `{item["result"]}`', f'**Check:** {item["check"]}']
         lines += ['**Scope reference:** ' + ', '.join(
@@ -118,7 +125,8 @@ def derivations(chapter):
             f'<details class="derivation" id="derivation-{n}-{i}"{opened}>'
             f'<summary>{esc(item["title"])}</summary><div class="derivation-body">'
             f'<p><strong>Concept.</strong> {esc(item["concept"])}</p>'
-            f'<p class="derivation-assumptions"><strong>Assumptions & starting points.</strong> {esc(item["assumptions"])}</p>'
+            + visual(DERIVATION_VISUALS[n][i-1], f'visual-derivation-{n}-{i}')
+            + f'<p class="derivation-assumptions"><strong>Assumptions & starting points.</strong> {esc(item["assumptions"])}</p>'
             '<ol>' + ''.join(f'<li>{esc(step)}</li>' for step in item['steps']) + '</ol>'
             f'<div class="equation derivation-result"><small>Result</small><code>{esc(item["result"])}</code></div>'
             f'<p class="derivation-check"><strong>Check & interpretation.</strong> {esc(item["check"])}</p>'
@@ -147,6 +155,13 @@ def enrich_sections(rendered):
         concepts = base.split('<h3>Essential equations</h3>')[0]
         concepts = re.sub(r'^\s*<h2>.*?</h2>', '', concepts, count=1, flags=re.S)
         concepts = concepts.replace('<h3>Notes</h3>', '')
+        blocks = re.findall(r'<h3>(.*?)</h3>\s*(<p>.*?</p>)', concepts, re.S)
+        assert len(blocks) == len(c['concepts']), f'Unexpected concept markup in chapter {n}'
+        concepts = ''.join(
+            f'<section class="concept" aria-labelledby="concept-{n}-{i}">'
+            f'<h3 id="concept-{n}-{i}">{title}</h3>{prose}'
+            + visual(CONCEPT_VISUALS[n][i-1], f'visual-concept-{n}-{i}') + '</section>'
+            for i, (title, prose) in enumerate(blocks, 1))
         formulas = '<div class="equations">' + ''.join(
             f'<div class="equation"><code>{esc(f)}</code><small>{esc(note)}</small></div>' for f, note in c['formulas']) + '</div>'
         example = (f'<section class="worked" aria-labelledby="example-{n}"><h3 id="example-{n}">Worked example</h3><p>{esc(c["example"])}</p>'
@@ -171,6 +186,7 @@ def enrich_sections(rendered):
 
 
 def main():
+    validate_visuals(CHAPTERS)
     generators = [Path.home() / f'{root}/skills/chapter-tutorial-html/scripts/generate_chapter_html.py' for root in ('.agents', '.codex')]
     generator = next((p for p in generators if p.exists()), None)
     if not generator:
@@ -198,7 +214,8 @@ def main():
     payload = {str(c['number']): c['quiz'] for c in CHAPTERS}
     script = 'const PHYSICS12_QUIZZES = ' + json.dumps(payload, ensure_ascii=False).replace('<', '\\u003c') + ';\n' + (ROOT / 'tools/physics12-tutorial.js').read_text()
     count = sum(len(c['derivations']['items']) for c in CHAPTERS)
-    for key, value in {'DERIVATION_COUNT': str(count), 'NAVIGATION': ''.join(navigation), 'ROADMAP': ''.join(roadmap), 'SUBJECTS': ''.join(f'<option>{esc(g)}</option>' for g in groups), 'CONSTANTS': constants, 'FORMULAS': formulas, 'SCRIPT': script}.items():
+    visual_count = sum(len(c['concepts']) for c in CHAPTERS) + count
+    for key, value in {'VISUAL_COUNT': str(visual_count), 'DERIVATION_COUNT': str(count), 'NAVIGATION': ''.join(navigation), 'ROADMAP': ''.join(roadmap), 'SUBJECTS': ''.join(f'<option>{esc(g)}</option>' for g in groups), 'CONSTANTS': constants, 'FORMULAS': formulas, 'SCRIPT': script}.items():
         page = page.replace(f'%%{key}%%', value)
     # Avoid unsupported combining-arrow glyphs in system fonts. Preserve script
     # strings as plain text and use a CSS vector arrow for rendered lesson text.
@@ -209,7 +226,7 @@ def main():
     (ROOT / 'physics12-tutorial.html').write_text(page)
     (ROOT / 'content/physics12/tutorial-outline.md').write_text(md)
     (ROOT / 'content/physics12/chapters.json').write_text(json.dumps(CHAPTERS, ensure_ascii=False, indent=2) + '\n')
-    print(f'Built physics12-tutorial.html: {len(CHAPTERS)} chapters, {count} equation explanations, 33 examples, 33 checks, 4 labs; {len(page.encode()):,} bytes.')
+    print(f'Built physics12-tutorial.html: {len(CHAPTERS)} chapters, {visual_count} teaching pictures, {count} equation explanations, 33 examples, 33 checks, 4 labs; {len(page.encode()):,} bytes.')
 
 
 if __name__ == '__main__':

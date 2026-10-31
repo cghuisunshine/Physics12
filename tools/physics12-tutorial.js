@@ -47,7 +47,7 @@
       card.hidden = !match || (mode === 'slides' && card !== visible[slide]);
       if (match && terms.length) {
         card.querySelector('.lesson').open = true;
-        for (const detail of card.querySelectorAll('.derivation')) {
+        for (const detail of card.querySelectorAll('.derivation,.visual-answer')) {
           if (terms.every(term => normalize(detail.textContent).includes(term))) detail.open = true;
         }
       }
@@ -107,7 +107,7 @@
   $('previous').addEventListener('click', () => move(-1));
   $('next').addEventListener('click', () => move(1));
   document.addEventListener('keydown', event => {
-    if (mode !== 'slides' || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.target.closest('input,select,textarea,button,summary,[contenteditable]')) return;
+    if (mode !== 'slides' || $('visual-dialog').open || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.target.closest('input,select,textarea,button,summary,[contenteditable]')) return;
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {event.preventDefault(); move(event.key === 'ArrowRight' ? 1 : -1);}
   });
   $('nav-toggle').addEventListener('click', () => {
@@ -151,9 +151,9 @@
     requestAnimationFrame(() => {scrollScheduled = false; activeLink(currentChapter());});
   }, {passive: true});
   window.addEventListener('beforeprint', () => {
-    beforePrint = [...document.querySelectorAll('.lesson,.derivation')].map(detail => [detail, detail.open]);
+    beforePrint = [...document.querySelectorAll('.lesson,.derivation,.visual-answer')].map(detail => [detail, detail.open]);
     for (const c of chapters) if (c.dataset.match === 'true') {
-      for (const detail of c.querySelectorAll('.lesson,.derivation')) detail.open = true;
+      for (const detail of c.querySelectorAll('.lesson,.derivation,.visual-answer')) detail.open = true;
     }
   });
   window.addEventListener('afterprint', () => {
@@ -161,6 +161,39 @@
     beforePrint = null;
   });
   $('print').addEventListener('click', () => window.print());
+
+  const visualDialog = $('visual-dialog');
+  let visualOpener = null, visualZoom = 1;
+  function zoomPicture(delta = 0) {
+    visualZoom = Math.max(1, Math.min(2, visualZoom + delta));
+    const baseWidth = Math.max(640, visualDialog.querySelector('.visual-dialog-scroll').clientWidth);
+    $('visual-dialog-image').style.width = `${baseWidth * visualZoom}px`;
+    $('visual-zoom-level').textContent = `${Math.round(visualZoom * 100)}%`;
+    $('visual-zoom-out').disabled = visualZoom <= 1;
+    $('visual-zoom-in').disabled = visualZoom >= 2;
+  }
+  for (const button of document.querySelectorAll('.visual-enlarge')) button.addEventListener('click', () => {
+    const figure = button.closest('.teaching-visual');
+    const title = figure.querySelector('.visual-heading strong').textContent;
+    const svg = figure.querySelector('svg').cloneNode(true);
+    // The copy has an accessible name, and no duplicate source IDs.
+    svg.removeAttribute('aria-labelledby');
+    svg.setAttribute('aria-label', title);
+    svg.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    $('visual-dialog-title').textContent = title;
+    $('visual-dialog-image').replaceChildren(svg);
+    $('visual-dialog-guide').textContent = figure.querySelector('figcaption>p').textContent;
+    visualOpener = button; visualZoom = 1; zoomPicture();
+    visualDialog.showModal();
+    visualDialog.querySelector('.visual-dialog-scroll').scrollTo?.(0, 0);
+  });
+  $('visual-zoom-in').addEventListener('click', () => zoomPicture(.25));
+  $('visual-zoom-out').addEventListener('click', () => zoomPicture(-.25));
+  $('visual-dialog-close').addEventListener('click', () => visualDialog.close());
+  visualDialog.addEventListener('close', () => {
+    $('visual-dialog-image').replaceChildren();
+    visualOpener?.focus();
+  });
 
   function bindLab(ids, update) {
     ids.forEach(id => $(id).addEventListener('input', update));
